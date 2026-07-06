@@ -1,0 +1,302 @@
+@use '../../../Styles/variables' as *;
+@use '../../../Styles/mixins' as *;
+
+.home-about {
+  position: relative;
+  z-index: 1;
+  background: #ffffff;
+  color: $text;
+  overflow: hidden;
+  padding-top: clamp(130px, 15vw, 180px);
+  // Both sides start flat at 180px and DECREASE (both expand upward — no shrinking).
+  // Right reveals fast: 180 → 0px  (full 180px removed = large scale).
+  // Left reveals slow:  180 → 90px (only 90px removed = small scale).
+  // JS range compressed to vh*0.5 so animation kicks in after ~140px scroll.
+  // Difference at full progress = 90px → steep incline toward the right.
+  clip-path: polygon(
+    0    calc(180px - var(--about-progress, 0) * 90px),
+    100% calc(180px - var(--about-progress, 0) * 180px),
+    100% 100%,
+    0    100%
+  );
+
+  // ── Section info strip ──────────────────────────────────────────────────
+  &__strip {
+    @include page-gutter;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid $grey-300;
+  }
+
+  &__strip-index {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: $font-sans;
+    font-size: 0.75rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.06em;
+    color: $grey-700;
+  }
+
+  &__strip-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $primary;
+    flex-shrink: 0;
+  }
+
+  &__strip-label {
+    font-family: $font-sans;
+    font-size: 0.75rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.08em;
+    color: $grey-700;
+    margin-left: auto; // pushes label + copy to the right
+    margin-right: 20px; // small gap between label and copy
+  }
+
+  &__strip-copy {
+    font-family: $font-sans;
+    font-size: 0.72rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.06em;
+    color: $grey-700;
+  }
+
+  // ── Large heading ───────────────────────────────────────────────────────
+  &__heading-wrap {
+    @include page-gutter;
+    padding-top: clamp(24px, 3vw, 40px);
+    padding-bottom: clamp(24px, 3vw, 40px);
+  }
+
+  &__heading {
+    font-family: $font-sans;
+    font-size: clamp(1.9rem, 4.8vw, 4.4rem);
+    font-weight: $fw-medium;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: $heading;
+    width: 100%;
+    max-width: 100%;
+    text-indent: 38%;
+    margin: 0;
+  }
+
+  // ── Content grid ─────────────────────────────────────────────────────────
+  &__grid {
+    @include page-gutter;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: clamp(32px, 5vw, 80px);
+    padding-top: clamp(24px, 3vw, 40px);
+    padding-bottom: clamp(40px, 6vw, 80px);
+    align-items: start;
+  }
+
+  // ── Photo ─────────────────────────────────────────────────────────────────
+  &__photo-wrap {
+    position: sticky;
+    top: 24px;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-radius: 4px;
+    height: 600px;
+  }
+
+  &__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center top;
+    filter: saturate(0.85) contrast(1.05);
+    transition: transform 0.6s ease;
+
+    .home-about__photo-wrap:hover & {
+      transform: scale(1.03);
+    }
+  }
+
+  // ── Rows ───────────────────────────────────────────────────────────────────
+  &__rows {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: start;
+    padding: clamp(20px, 3vw, 36px) 0;
+  }
+
+  &__row-tag {
+    font-family: $font-sans;
+    font-size: 0.78rem;
+    font-weight: $fw-medium;
+    letter-spacing: 0.04em;
+    color: $primary; // brand red on tags — clear but not overpowering
+    padding-top: 3px;
+    white-space: nowrap;
+  }
+
+  &__row-text {
+    font-family: $font-sans;
+    font-size: clamp(0.9rem, 1.1vw, 1rem);
+    font-weight: $fw-light;
+    line-height: 1.7;
+    color: $grey-500;
+  }
+
+  // ── Stats ─────────────────────────────────────────────────────────────────
+  &__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &__stat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+  }
+
+  &__stat-label {
+    font-family: $font-sans;
+    font-size: 0.88rem;
+    font-weight: $fw-regular;
+    color: $text;
+  }
+
+  &__stat-value {
+    font-family: $font-sans;
+    font-size: 1.05rem;
+    font-weight: $fw-semibold;
+    letter-spacing: -0.02em;
+    color: $primary; // brand red on key numbers — impactful & branded
+  }
+
+  // ── CTA ───────────────────────────────────────────────────────────────────
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: clamp(24px, 3vw, 40px);
+    font-family: $font-sans;
+    font-size: 0.82rem;
+    font-weight: $fw-medium;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $text;
+    text-decoration: none;
+    transition: gap 0.25s ease, color 0.25s ease;
+
+    &:hover {
+      gap: 16px;
+      color: $primary;
+    }
+  }
+
+  &__cta-text {
+    padding-bottom: 4px;
+    border-bottom: 1px solid $primary;
+  }
+
+  &__cta-arrow {
+    font-size: 0.9rem;
+    transition: transform 0.25s ease;
+
+    .home-about__cta:hover & {
+      transform: translate(2px, -2px);
+    }
+  }
+
+  // ── Client logos marquee ──────────────────────────────────────────────────
+  &__marquee {
+    border-top: 1px solid $grey-200;
+    overflow: hidden;
+    padding: clamp(20px, 3vw, 32px) 0;
+  }
+
+  &__marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: max-content;
+    animation: marquee-scroll 36s linear infinite;
+
+    &:hover {
+      animation-play-state: paused;
+    }
+  }
+
+  &__marquee-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: $grey-100;
+    padding: 20px 32px;
+    width: 200px;
+    height: 150px;
+    border-radius: $radius-xs;
+  }
+
+  &__marquee-logo {
+    width: 100px;
+    height: 50px;
+    object-fit: contain;
+    // filter: grayscale(1);
+    opacity: 0.7;
+    transition: opacity 0.25s ease, filter 0.25s ease;
+
+    &:hover {
+      opacity: 1;
+      filter: grayscale(0);
+    }
+  }
+
+  // ── Responsive ─────────────────────────────────────────────────────────────
+  @include respond-below(lg) {
+    &__grid {
+      grid-template-columns: 1fr 1.6fr;
+      gap: 32px;
+    }
+  }
+
+  @include respond-below(md) {
+    &__grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding-top: 32px;
+    }
+
+    &__photo-wrap {
+      position: static;
+      aspect-ratio: 4 / 3;
+      max-width: 100%;
+    }
+
+    &__row {
+      grid-template-columns: 90px 1fr;
+      gap: 16px;
+    }
+
+    &__heading {
+      font-size: clamp(1.7rem, 8vw, 2.6rem);
+    }
+  }
+}
+
+// ── Marquee keyframes (top-level, outside block) ──────────────────────────────
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}

@@ -1,0 +1,321 @@
+@use '../../../Styles/variables' as *;
+@use '../../../Styles/mixins' as *;
+
+.home-portfolio {
+  position: relative;
+  z-index: 1;
+  background: #ffffff;
+  color: $text;
+
+  // ── Section strip ───────────────────────────────────────────────────────
+  &__strip {
+    @include page-gutter;
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid $grey-300;
+  }
+
+  &__strip-index {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: $font-sans;
+    font-size: 0.75rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.06em;
+    color: $grey-700;
+  }
+
+  &__strip-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $primary;
+    flex-shrink: 0;
+  }
+
+  &__strip-label {
+    font-family: $font-sans;
+    font-size: 0.75rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.08em;
+    color: $grey-700;
+    margin-left: auto;
+    margin-right: 20px;
+  }
+
+  &__strip-copy {
+    font-family: $font-sans;
+    font-size: 0.72rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.06em;
+    color: $grey-700;
+  }
+
+  // ── Body grid ───────────────────────────────────────────────────────────
+  &__body {
+    @include page-gutter;
+    display: grid;
+    grid-template-columns: 200px 1fr 160px;
+    gap: clamp(24px, 4vw, 56px);
+    padding-top: clamp(32px, 4vw, 56px);
+    padding-bottom: clamp(40px, 5vw, 72px);
+    align-items: start;
+  }
+
+  // ── Left sidebar ────────────────────────────────────────────────────────
+  &__sidebar {
+    position: sticky;
+    top: clamp(160px, 18vh, 220px);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  &__display {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.92;
+  }
+
+  &__display-line1 {
+    font-family: $font-sans;
+    font-size: clamp(2.8rem, 5vw, 4.8rem);
+    font-weight: $fw-bold;
+    letter-spacing: -0.04em;
+    color: $heading;
+  }
+
+  &__display-line2 {
+    font-family: $font-sans;
+    font-size: clamp(2.8rem, 5vw, 4.8rem);
+    font-weight: $fw-bold;
+    letter-spacing: -0.04em;
+    color: $heading;
+    opacity: 0.28;
+  }
+
+  &__description {
+    font-family: $font-serif;
+    font-size: clamp(0.85rem, 1.1vw, 1rem);
+    font-style: italic;
+    line-height: 1.6;
+    color: $grey-500;
+    margin: 0 0 clamp(12px, 2vh, 20px);
+  }
+
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: $font-sans;
+    font-size: 0.8rem;
+    font-weight: $fw-medium;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $text;
+    text-decoration: none;
+    transition: gap 0.25s ease, color 0.25s ease;
+
+    &:hover {
+      gap: 16px;
+      color: $primary;
+    }
+  }
+
+  &__cta-text {
+    padding-bottom: 4px;
+    border-bottom: 1px solid $primary;
+  }
+
+  &__cta-arrow {
+    font-size: 0.85rem;
+    transition: transform 0.25s ease;
+
+    .home-portfolio__cta:hover & {
+      transform: translate(2px, -2px);
+    }
+  }
+
+  // ── Portfolio list ──────────────────────────────────────────────────────
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  // ── Portfolio item — sticky stacking cards ──────────────────────────────
+  &__item {
+    position: sticky;
+    background: #ffffff;
+    transform-origin: top center;
+    will-change: transform;
+
+    &:nth-child(1) { top: 60px;  z-index: 1; }
+    &:nth-child(2) { top: 80px;  z-index: 2; }
+    &:nth-child(3) { top: 100px; z-index: 3; }
+    &:nth-child(4) { top: 120px; z-index: 4; }
+  }
+}
+
+// ── Portfolio item internals (BEM block) ─────────────────────────────────────
+.portfolio-item {
+
+  &__media-wrap {
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 4px;
+  }
+
+  &__media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+
+    .home-portfolio__item:hover & {
+      transform: scale(1.03);
+    }
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: clamp(12px, 1.5vw, 18px) 0;
+  }
+
+  &__index {
+    font-family: $font-sans;
+    font-size: 0.78rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.06em;
+    color: $primary;
+    flex-shrink: 0;
+    min-width: 28px;
+  }
+
+  &__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__service {
+    font-family: $font-sans;
+    font-size: clamp(0.88rem, 1.1vw, 1rem);
+    font-weight: $fw-medium;
+    color: $heading;
+    letter-spacing: -0.01em;
+  }
+
+  &__client {
+    font-family: $font-sans;
+    font-size: 0.8rem;
+    font-weight: $fw-light;
+    color: $grey-500;
+  }
+
+  &__industry {
+    font-style: normal;
+    color: $grey-400;
+  }
+
+  &__year {
+    font-family: $font-sans;
+    font-size: 0.72rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.06em;
+    color: $grey-400;
+    flex-shrink: 0;
+  }
+}
+
+// ── See all card ─────────────────────────────────────────────────────────────
+.home-portfolio {
+  &__see-all {
+    position: sticky;
+    top: clamp(160px, 18vh, 220px);
+  }
+
+  &__see-all-link {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-decoration: none;
+    color: $text;
+
+    &:hover .home-portfolio__see-all-img {
+      transform: scale(1.04);
+    }
+  }
+
+  &__see-all-thumb {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-radius: 4px;
+    background: $grey-100;
+  }
+
+  &__see-all-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  &__see-all-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: $font-sans;
+    font-size: 0.82rem;
+    font-weight: $fw-light;
+    color: $grey-700;
+
+    strong {
+      font-weight: $fw-semibold;
+      color: $primary;
+    }
+  }
+
+  // ── Responsive ─────────────────────────────────────────────────────────
+  @include respond-below(lg) {
+    &__body {
+      grid-template-columns: 160px 1fr 140px;
+      gap: 24px;
+    }
+  }
+
+  @include respond-below(md) {
+    &__body {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding-top: 28px;
+    }
+
+    &__sidebar {
+      position: static;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &__display {
+      flex-direction: row;
+      gap: 8px;
+    }
+
+    &__see-all {
+      position: static;
+      display: none;
+    }
+  }
+}

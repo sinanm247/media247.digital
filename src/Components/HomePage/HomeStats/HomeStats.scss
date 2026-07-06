@@ -1,0 +1,209 @@
+@use '../../../Styles/variables' as *;
+@use '../../../Styles/mixins' as *;
+
+// ── Section shell ────────────────────────────────────────────────────────────
+.home-stats {
+  position: relative;
+  z-index: 3; // Above Services (z-index:2) so clip reveals dark Services behind it
+  background: $white;
+  color: $text;
+  padding-top: clamp(130px, 15vw, 180px);
+
+  // Diagonal reveal — white section clips over dark Services, same as About over Hero.
+  clip-path: polygon(
+    0    calc(180px - var(--stats-progress, 0) * 90px),
+    100% calc(180px - var(--stats-progress, 0) * 180px),
+    100% 100%,
+    0    100%
+  );
+
+  // ── Top info strip — matches HomeAbout / HomeServices pattern ──────────────
+  &__strip {
+    @include page-gutter;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid $grey-300;
+  }
+
+  &__strip-index {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: $font-sans;
+    font-size: 0.75rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.06em;
+    color: $grey-700;
+  }
+
+  &__strip-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $primary;
+    flex-shrink: 0;
+  }
+
+  &__strip-label {
+    font-family: $font-sans;
+    font-size: 0.75rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.08em;
+    color: $grey-700;
+    margin-left: auto;
+    margin-right: 20px;
+  }
+
+  &__strip-copy {
+    font-family: $font-sans;
+    font-size: 0.72rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.06em;
+    color: $grey-700;
+  }
+
+  // ── 2 × 2 grid ───────────────────────────────────────────────────────────
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    // Inner borders using box-shadow outline trick on the grid
+    border-left: 1px solid $border;
+  }
+
+  // ── Individual stat card ──────────────────────────────────────────────────
+  &__item {
+    padding: clamp(32px, 5vw, 72px) clamp(28px, 4.5vw, 64px);
+    border-right: 1px solid $border;
+    border-bottom: 1px solid $border;
+
+    // Remove bottom border from the last two items
+    &:nth-last-child(-n + 2) {
+      border-bottom: none;
+    }
+  }
+
+  // ── Stat number wrap — holds the large figure + corner bracket ─────────────
+  &__num-wrap {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding-bottom: clamp(20px, 3.5vh, 36px);
+  }
+
+  // Corner bracket decoration (top-right of the num-wrap area)
+  &__corner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 14px;
+    height: 14px;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      background: $text;
+    }
+
+    // Vertical arm of the bracket
+    &::before {
+      width: 1.5px;
+      height: 100%;
+      right: 0;
+      top: 0;
+    }
+
+    // Horizontal arm of the bracket
+    &::after {
+      height: 1.5px;
+      width: 100%;
+      right: 0;
+      top: 0;
+    }
+  }
+
+  // ── Large stat figure ─────────────────────────────────────────────────────
+  &__num {
+    font-family: $font-sans;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: $fw-bold;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    color: $heading;
+  }
+
+  &__unit {
+    font-family: $font-sans;
+    font-size: clamp(0.85rem, 1.2vw, 1rem);
+    font-weight: $fw-light;
+    letter-spacing: 0.02em;
+    color: $grey-400;
+    padding-bottom: 4px;
+  }
+
+  // ── Horizontal divider ────────────────────────────────────────────────────
+  &__divider {
+    border: none;
+    border-top: 1px solid $border;
+    margin: 0 0 clamp(14px, 2.5vh, 24px);
+  }
+
+  // ── Stat label ────────────────────────────────────────────────────────────
+  &__title {
+    font-family: $font-sans;
+    font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+    font-weight: $fw-semibold;
+    letter-spacing: 0.01em;
+    color: $heading;
+    margin: 0 0 clamp(8px, 1.5vh, 14px);
+  }
+
+  // ── Description ───────────────────────────────────────────────────────────
+  &__desc {
+    font-family: $font-sans;
+    font-size: clamp(0.8rem, 1vw, 0.9rem);
+    font-weight: $fw-light;
+    line-height: 1.65;
+    color: $grey-400;
+    margin: 0;
+    max-width: 34ch;
+  }
+
+  // ── Responsive ─────────────────────────────────────────────────────────────
+  @include respond-below(lg) {
+    &__num {
+      font-size: clamp(2.4rem, 5.5vw, 4.5rem);
+    }
+  }
+
+  @include respond-below(md) {
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__item {
+      border-bottom: 1px solid $border;
+
+      &:nth-last-child(-n + 2) {
+        border-bottom: 1px solid $border;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    &__num {
+      font-size: clamp(2.8rem, 12vw, 4.5rem);
+    }
+
+    &__desc {
+      max-width: 100%;
+    }
+  }
+}

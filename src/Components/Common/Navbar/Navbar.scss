@@ -1,0 +1,149 @@
+@use '../../../Styles/variables' as *;
+@use '../../../Styles/mixins' as *;
+
+.navbar {
+  position: relative;
+  z-index: $z-header;
+  width: 100%;
+  color: var(--section-text);
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: clamp(10px, 1.5vw, 24px);
+    padding-bottom: clamp(8px, 1.5vw, 16px);
+    gap: 24px;
+  }
+
+  &__brand {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: inherit;
+    transition: opacity 0.25s ease;
+
+    &:hover {
+      opacity: 0.82;
+    }
+  }
+
+  &__logo {
+    margin-left: -5px;
+    width: clamp(90px, 10vw, 130px);
+    height: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+  }
+
+  &__nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(14px, 2.4vw, 36px);
+  }
+
+  &__link {
+    position: relative;
+    display: inline-block;
+    color: inherit;
+    transition: opacity 0.25s ease;
+
+    &:hover,
+    &.is-active {
+      opacity: 0.72;
+    }
+  }
+
+  &__label {
+    position: relative;
+    display: inline-block;
+    font-family: $font-sans;
+    font-size: clamp(0.9rem, 1.1vw, 1.15rem);
+    font-weight: $fw-regular;
+    letter-spacing: 0.01em;
+    padding-right: 16px;
+  }
+
+  &__num {
+    position: absolute;
+    top: -3px;
+    right: 0;
+    font-family: $font-sans;
+    font-size: 0.6rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.04em;
+    opacity: 0.55;
+    line-height: 1;
+  }
+
+  &__right {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-end;
+    min-width: clamp(90px, 10vw, 130px);
+  }
+
+  // ── Hero variant ───────────────────────────────────────────────────────────
+  &--hero {
+    color: #ffffff;
+
+    .navbar__inner {
+      @include page-gutter;
+    }
+  }
+
+  // ── Default variant ────────────────────────────────────────────────────────
+  &--default {
+    background: var(--section-bg-start);
+    border-bottom: 1px solid var(--color-border);
+
+    .navbar__inner {
+      @include container;
+    }
+
+    .navbar__logo {
+      filter: none;
+    }
+  }
+
+  // ── Responsive ─────────────────────────────────────────────────────────────
+  @include respond-below(lg) {
+    &__list {
+      gap: 10px 16px;
+    }
+  }
+
+  @include respond-below(md) {
+    &__inner {
+      flex-wrap: wrap;
+      row-gap: 10px;
+    }
+
+    &__nav {
+      order: 3;
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    &__list {
+      justify-content: flex-start;
+    }
+
+    &__right {
+      order: 2;
+    }
+
+    &__logo {
+      width: 84px;
+    }
+  }
+}

@@ -1,0 +1,252 @@
+@use '../../../Styles/variables' as *;
+@use '../../../Styles/mixins' as *;
+
+// ── Outer section — dark base with padding on all sides ─────────────────────
+.home-cta {
+  position: relative;
+  z-index: 1;
+  background: $white;
+  padding: clamp(14px, 2vw, 28px);
+
+  // ── Framed container — acts as a "window" into the fixed background ────────
+  &__frame {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    border-radius: clamp(10px, 1.2vw, 18px);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $white;
+
+    // Fixed background image — the frame scrolls but image stays put
+    // Uses CSS custom property set via inline style in JSX
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image: var(--cta-bg);
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center 40%;
+      filter: saturate(0.55) contrast(1.08) brightness(0.72);
+    }
+
+    // Mobile fallback — fixed attachment is broken in iOS Safari
+    @media (hover: none) {
+      &::before {
+        background-attachment: scroll;
+      }
+    }
+  }
+
+  // ── Gradient overlay inside the frame ────────────────────────────────────
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(120deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.15) 55%, rgba(0, 0, 0, 0.45) 100%),
+      linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, transparent 46%);
+  }
+
+  // ── Decorative cross markers ───────────────────────────────────────────────
+  &__cross {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+    width: 18px;
+    height: 18px;
+    transform: translate(-50%, -50%);
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      background: rgba(255, 255, 255, 0.38);
+      border-radius: 1px;
+    }
+
+    &::before {
+      width: 1px;
+      height: 100%;
+      left: 50%;
+      top: 0;
+    }
+
+    &::after {
+      width: 100%;
+      height: 1px;
+      top: 50%;
+      left: 0;
+    }
+  }
+
+  // ── Inner content ─────────────────────────────────────────────────────────
+  &__inner {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    @include page-gutter;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(32px, 6vh, 64px);
+    padding-top: clamp(80px, 14vh, 160px);
+    padding-bottom: clamp(70px, 12vh, 140px);
+  }
+
+  // ── Split display heading ─────────────────────────────────────────────────
+  &__heading-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(20px, 3.5vw, 56px);
+    width: 100%;
+  }
+
+  &__heading-left {
+    font-family: $font-sans;
+    font-size: clamp(3.5rem, 9.5vw, 11.5rem);
+    font-weight: $fw-bold;
+    letter-spacing: -0.03em;
+    line-height: 0.88;
+    color: $white;
+    margin: 0;
+    flex: 1;
+    text-align: right;
+  }
+
+  &__heading-right {
+    font-family: $font-sans;
+    font-size: clamp(3.5rem, 9.5vw, 11.5rem);
+    font-weight: $fw-light;
+    letter-spacing: -0.03em;
+    line-height: 0.88;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.65);
+    margin: 0;
+    flex: 1;
+    text-align: left;
+  }
+
+  // ── Floating portrait card ────────────────────────────────────────────────
+  &__card {
+    flex-shrink: 0;
+    width: clamp(200px, 20vw, 300px);
+    aspect-ratio: 3 / 4;
+    border-radius: $radius-md;
+    overflow: hidden;
+    // box-shadow:
+    //   0 20px 50px rgba(0, 0, 0, 0.55),
+    //   0 4px 12px rgba(0, 0, 0, 0.35);
+  }
+
+  &__card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  // ── Bottom: tagline + CTA ─────────────────────────────────────────────────
+  &__bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+
+  &__tagline {
+    font-family: $font-serif;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+    text-align: center;
+  }
+
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: $font-sans;
+    font-size: clamp(0.78rem, 1vw, 0.9rem);
+    font-weight: $fw-medium;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: $white;
+    text-decoration: none;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    transition: border-color 0.25s ease, gap 0.25s ease;
+
+    &:hover {
+      border-color: $white;
+      gap: 20px;
+    }
+  }
+
+  &__cta-line {
+    width: 30px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.55);
+    flex-shrink: 0;
+    transition: width 0.25s ease;
+
+    .home-cta__cta:hover & {
+      width: 44px;
+    }
+  }
+
+  &__cta-arrow {
+    font-size: 0.9rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  // ── Responsive ─────────────────────────────────────────────────────────────
+  @include respond-below(lg) {
+    &__heading-left,
+    &__heading-right {
+      font-size: clamp(2.8rem, 8vw, 7rem);
+    }
+
+    &__card {
+      width: clamp(120px, 12vw, 180px);
+    }
+  }
+
+  @include respond-below(md) {
+    padding: 10px;
+
+    &__heading-row {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    &__heading-left {
+      text-align: center;
+      font-size: clamp(3rem, 14vw, 5.5rem);
+    }
+
+    &__heading-right {
+      text-align: center;
+      font-size: clamp(3rem, 14vw, 5.5rem);
+    }
+
+    &__card {
+      width: clamp(130px, 36vw, 200px);
+    }
+
+    &__cross {
+      display: none;
+    }
+  }
+}
