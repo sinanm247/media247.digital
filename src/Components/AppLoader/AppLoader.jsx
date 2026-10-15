@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import "./AppLoader.scss";
-import video from "../../assets/Logo/M247D-Logo.png";
-import logo from "../../assets/Logo/M247D-Logo.png";
+// AppLoader renders before the page is ready — use a static import for the logo.
+// Theme-1 logo is used as the default loader asset.
+import logo from "../../assets/Theme-1/Logo/M247D-Logo.png";
 
 export default function AppLoader({ isVisible, showVideo = false }) {
   const videoRef = useRef(null);
@@ -22,7 +23,7 @@ export default function AppLoader({ isVisible, showVideo = false }) {
       {showVideo ? (
         <video
           ref={videoRef}
-          src={video}
+          src={logo}
           autoPlay
           muted
           playsInline

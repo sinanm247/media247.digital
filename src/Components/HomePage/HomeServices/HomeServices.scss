@@ -1,6 +1,11 @@
 @use '../../../Styles/variables' as *;
 @use '../../../Styles/mixins' as *;
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Home Services — sticky horizontal scroll section
+// Height is set dynamically by JS: calc(100vh + totalSlide)
+// ─────────────────────────────────────────────────────────────────────────────
+
 .home-services {
   position: relative;
   z-index: 2;
@@ -8,12 +13,12 @@
   color: $white;
   padding-top: clamp(130px, 15vw, 180px);
 
-  // White curtain — lifts diagonally and stays inclined (same as About/Hero transition).
+  // ── White curtain — lifts diagonally as section enters viewport ───────────
   // Right lifts fully (180→0px), left lifts partially (180→90px) → permanent incline.
   &::before {
     content: '';
     position: absolute;
-    top: -2px; // Extend 2px above section top to cover any sub-pixel rendering gap
+    top: -2px; // 2px bleed to cover sub-pixel gaps
     left: 0;
     right: 0;
     height: 202px;
@@ -28,7 +33,24 @@
     );
   }
 
-  // ── Section strip ───────────────────────────────────────────────────────
+  // ── Sticky container — stays pinned for the full horizontal scroll ─────────
+  &__sticky {
+    position: sticky;
+    top: 0;
+    // Use dvh (dynamic viewport height) so Safari's collapsible toolbar doesn't
+    // cause a gap between the sticky and the actual visible viewport bottom.
+    height: 100vh;
+    height: 100dvh; // overrides in browsers that support it (Chrome 108+, Safari 15.4+)
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: $black;
+    // Ensure the black background is visible even if a compositing layer
+    // strips the section background behind the pinned sticky.
+    isolation: isolate;
+  }
+
+  // ── Section strip ─────────────────────────────────────────────────────────
   &__strip {
     @include page-gutter;
     display: flex;
@@ -36,6 +58,8 @@
     padding-top: 10px;
     padding-bottom: 10px;
     border-top: 1px solid rgba(255, 255, 255, 0.55);
+    flex-shrink: 0;
+    z-index: 2;
   }
 
   &__strip-index {
@@ -75,12 +99,13 @@
     color: rgba(255, 255, 255, 0.4);
   }
 
-  // ── Intro heading ────────────────────────────────────────────────────────
+  // ── Intro heading ─────────────────────────────────────────────────────────
   &__intro-wrap {
     @include page-gutter;
     padding-top: clamp(40px, 5vw, 72px);
     padding-bottom: clamp(40px, 5vw, 72px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
   }
 
   &__intro {
@@ -93,93 +118,71 @@
     margin: 0;
   }
 
-  &__intro-bold {
-    color: $white;
-  }
+  &__intro-bold { color: $white; }
+  &__intro-fade { color: rgba(255, 255, 255, 0.28); }
 
-  &__intro-fade {
-    color: rgba(255, 255, 255, 0.28);
-  }
-
-  // ── Service list ─────────────────────────────────────────────────────────
-  &__list {
-    @include page-gutter;
-    padding-left: 200px; // override mixin left padding
-    list-style: none;
-    margin: 0;
-    padding-top: 0;
-    padding-bottom: clamp(48px, 6vw, 96px);
-  }
-
-  // ── Service row ──────────────────────────────────────────────────────────
-  // number | image portrait | info
-  // column-gap: 50px (img→info), num gets extra padding-right for wider num→img gap
-  &__row {
-    display: grid;
-    grid-template-columns: clamp(100px, 14vw, 180px) clamp(280px, 34vw, 460px) 1fr;
-    column-gap: 50px;
-    row-gap: 0;
+  // ── Horizontal track ──────────────────────────────────────────────────────
+  &__track {
+    flex: 1;
+    display: flex;
     align-items: stretch;
-    padding: clamp(32px, 4vw, 56px) 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    cursor: default;
-
-    &:last-child {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    &:hover .home-services__row-img {
-      transform: scale(1.04);
-    }
-
-    &:hover .home-services__row-num {
-      color: $primary;
-    }
+    gap: clamp(12px, 1.5vw, 20px);
+    padding: clamp(20px, 2.5vw, 32px) clamp(32px, 5vw, 80px);
+    will-change: transform;
+    min-height: 0; // required for flex children to respect parent height
   }
 
-  // ── Row: number — bottom-aligned, extra right padding widens num→img gap ──
-  &__row-num {
-    font-family: $font-sans;
-    font-size: clamp(4rem, 7vw, 9rem);
-    font-weight: $fw-bold;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    color: $white;
-    transition: color 0.3s ease;
-    user-select: none;
-    align-self: end;
-    padding-right: clamp(20px, 4vw, 60px); // adds to column-gap → wider num→img space
-  }
-
-  // ── Row: image — 10:7 landscape ratio ────────────────────────────────────
-  &__row-img-wrap {
+  // ── Service card ──────────────────────────────────────────────────────────
+  &__card {
+    flex-shrink: 0;
+    // width: viewport minus left-padding, gap, and a ~160px "peek" of the next card
+    width: clamp(300px, calc(100vw - 240px), 1160px);
+    display: grid;
+    grid-template-columns: clamp(200px, 30%, 360px) 1fr;
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
     overflow: hidden;
-    border-radius: $radius-xs;
-    aspect-ratio: 10 / 7;
-    align-self: center;
-    background: $dark;
-    width: 100%;
+    transition: border-color 0.3s ease;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
   }
 
-  &__row-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  // ── Row: info — title at top, subtitle+desc at bottom ─────────────────────
-  &__row-info {
+  // Left: text pane
+  &__card-body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: clamp(8px, 1vw, 16px) 0;
+    padding: clamp(24px, 3vw, 44px);
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
   }
 
-  &__row-title {
+  &__card-num {
     font-family: $font-sans;
-    font-size: clamp(1.8rem, 3.2vw, 3.8rem);
+    font-size: clamp(5rem, 9vw, 11rem);
+    font-weight: $fw-bold;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: rgba(255, 255, 255, 0.07);
+    user-select: none;
+    transition: color 0.4s ease;
+
+    .home-services__card:hover & {
+      color: rgba(255, 255, 255, 0.12);
+    }
+  }
+
+  &__card-info {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(8px, 0.9vw, 14px);
+  }
+
+  &__card-title {
+    font-family: $font-sans;
+    font-size: clamp(1.6rem, 2.6vw, 3rem);
     font-weight: $fw-bold;
     line-height: 1.04;
     letter-spacing: -0.03em;
@@ -187,75 +190,146 @@
     margin: 0;
   }
 
-  &__row-bottom {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(6px, 0.6vw, 10px);
-  }
-
-  &__row-subtitle {
+  &__card-subtitle {
     font-family: $font-sans;
-    font-size: clamp(0.78rem, 0.9vw, 0.88rem);
+    font-size: clamp(0.68rem, 0.8vw, 0.8rem);
     font-weight: $fw-semibold;
-    letter-spacing: 0.03em;
-    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $primary;
   }
 
-  &__row-desc {
+  &__card-desc {
     font-family: $font-sans;
-    font-size: clamp(0.8rem, 0.95vw, 0.92rem);
+    font-size: clamp(0.78rem, 0.9vw, 0.9rem);
     font-weight: $fw-light;
-    line-height: 1.65;
-    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.4);
     margin: 0;
-    max-width: 44ch;
+    max-width: 42ch;
   }
 
-  // ── Responsive ──────────────────────────────────────────────────────────
+  // Right: image pane
+  &__card-img-wrap {
+    overflow: hidden;
+    position: relative;
+    background: #1a1a1a;
+  }
+
+  &__card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    .home-services__card:hover & {
+      transform: scale(1.04);
+    }
+  }
+
+  // ── Progress bar + counter ────────────────────────────────────────────────
+  &__progress {
+    @include page-gutter;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-top: 10px;
+    padding-bottom: 14px;
+    flex-shrink: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  &__progress-counter {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    font-family: $font-sans;
+    font-size: 0.72rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.35);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  &__progress-current {
+    font-weight: $fw-semibold;
+    color: $white;
+    transition: content 0.2s;
+  }
+
+  &__progress-track {
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    width: 0%;
+    background: $primary;
+    border-radius: 1px;
+    transition: width 0.1s linear;
+  }
+
+  // ── Responsive ────────────────────────────────────────────────────────────
   @include respond-below(lg) {
-    &__list {
-      padding-left: clamp(80px, 12vw, 160px);
-    }
-
-    &__row {
-      grid-template-columns: clamp(80px, 12vw, 140px) clamp(160px, 22vw, 260px) 1fr;
-      column-gap: 36px;
-    }
-
-    &__row-num {
-      font-size: clamp(3.5rem, 6vw, 7rem);
-      padding-right: clamp(12px, 2.5vw, 36px);
+    &__card {
+      grid-template-columns: clamp(180px, 36%, 300px) 1fr;
     }
   }
 
   @include respond-below(md) {
-    &__list {
-      padding-left: 24px;
+    // On mobile: revert to native-scroll horizontal strip OR stack vertically
+    &__sticky {
+      position: relative;
+      height: auto;
+      overflow: visible;
     }
 
-    &__row {
-      grid-template-columns: 56px 1fr;
-      grid-template-rows: auto auto;
-      column-gap: 16px;
-      row-gap: 16px;
+    &__track {
+      flex-direction: column;
+      padding: 16px 20px 32px;
+      gap: 16px;
+    }
 
-      .home-services__row-num {
-        grid-row: 1 / 3;
-        font-size: clamp(2.5rem, 8vw, 4rem);
-        padding-right: 0;
-        align-self: end;
-      }
+    &__card {
+      width: 100%;
+      grid-template-columns: 1fr;
+      grid-template-rows: 220px auto;
+      border-radius: 6px;
+    }
 
-      .home-services__row-img-wrap {
-        grid-column: 2;
-        grid-row: 1;
-        aspect-ratio: 4 / 3;
-      }
+    &__card-img-wrap {
+      grid-row: 1;
+    }
 
-      .home-services__row-info {
-        grid-column: 2;
-        grid-row: 2;
-      }
+    &__card-body {
+      grid-row: 2;
+      border-right: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    &__card-num {
+      display: none;
+    }
+
+    &__card-title {
+      font-size: clamp(1.4rem, 6vw, 2rem);
+    }
+
+    &__progress {
+      display: none;
+    }
+
+    &__intro {
+      text-indent: 0;
+      font-size: clamp(1.7rem, 7vw, 2.4rem);
     }
   }
 }

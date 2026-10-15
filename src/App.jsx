@@ -2,8 +2,10 @@ import { Fragment, useEffect, useState } from 'react';
 import AppRouter from './Components/AppRouter/AppRouter';
 import AppLoader from './Components/AppLoader/AppLoader';
 import Footer from './Components/Common/Footer/Footer';
+import ThemeToggle from './Components/Common/ThemeToggle/ThemeToggle';
 import { AppLoaderContext } from './Context/AppLoaderContext';
 import { SectionThemeProvider } from './Context/SectionThemeContext';
+import { ThemeProvider } from './Context/ThemeContext';
 import { APP_LOADER_DURATION_MS } from './Constants/appLoader';
 import routes from './Routes/routes';
 
@@ -19,15 +21,18 @@ function App() {
 
   return (
     <AppLoaderContext.Provider value={{ isPageLoading: pageLoading, loaderDurationMs }}>
-      <SectionThemeProvider>
-        <AppLoader isVisible={pageLoading} showVideo={showLoaderVideo} />
-        <div className={`app-shell ${!pageLoading ? 'is-ready' : ''}`}>
-          <Fragment>
-            <AppRouter routes={routes} />
-            <Footer />
-          </Fragment>
-        </div>
-      </SectionThemeProvider>
+      <ThemeProvider>
+        <SectionThemeProvider>
+          <AppLoader isVisible={pageLoading} showVideo={showLoaderVideo} />
+          <div className={`app-shell ${!pageLoading ? 'is-ready' : ''}`}>
+            <Fragment>
+              <AppRouter routes={routes} />
+              <Footer />
+            </Fragment>
+          </div>
+          <ThemeToggle />
+        </SectionThemeProvider>
+      </ThemeProvider>
     </AppLoaderContext.Provider>
   );
 }

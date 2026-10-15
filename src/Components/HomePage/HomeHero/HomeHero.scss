@@ -16,14 +16,14 @@
   transform: translateY(calc(var(--scroll-progress, 0) * -100px));
 
   // Scroll-driven darkening overlay — deepens as user scrolls away
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 6;
-    pointer-events: none;
-    background: rgba(0, 0, 0, calc(var(--scroll-progress, 0) * 0.85));
-  }
+  // &::after {
+  //   content: '';
+  //   position: absolute;
+  //   inset: 0;
+  //   z-index: 6;
+  //   pointer-events: none;
+  //   background: rgba(0, 0, 0, calc(var(--scroll-progress, 0) * 0.85));
+  // }
 
   // ── Background image ───────────────────────────────────────────────────────
   &__bg {
@@ -345,6 +345,13 @@
   &__word-b {
     font-size: clamp(3rem, 8.5vw, 8.5rem);
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+  }
+
+  // ── Theme II: headline block pinned to the bottom, no bottom bar ──────────
+  &--theme-2 &__mid {
+    align-self: end;
+    justify-content: flex-end;
+    padding-bottom: clamp(28px, 4.5vw, 56px);
   }
 
   // ── Responsive ─────────────────────────────────────────────────────────────

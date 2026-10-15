@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
-import aboutPhoto from '../../../assets/Images/Image-1.webp';
 import { useSectionTheme } from '../../../Context/SectionThemeContext';
+import { useTheme } from '../../../Context/ThemeContext';
+import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './HomeAbout.scss';
 
@@ -16,6 +17,8 @@ const { about } = SITE_CONTENT;
 export default function HomeAbout() {
   const sectionRef = useRef(null);
   const { setSectionTheme } = useSectionTheme();
+  const { theme } = useTheme();
+  const assets = THEME_ASSETS[theme];
 
   // Section theme
   useEffect(() => {
@@ -85,7 +88,7 @@ export default function HomeAbout() {
         {/* Photo */}
         <div className="home-about__photo-wrap">
           <img
-            src={aboutPhoto}
+            src={assets.images.image1}
             alt="Media247 Digital — About us"
             className="home-about__photo"
             loading="lazy"
@@ -124,7 +127,7 @@ export default function HomeAbout() {
       {/* ── Client logos marquee ──────────────────────────────────────── */}
       <div className="home-about__marquee" aria-hidden="true">
         <div className="home-about__marquee-track">
-          {[...about.clients, ...about.clients].map((logo, i) => (
+          {[...assets.clients, ...assets.clients].map((logo, i) => (
             <span key={i} className="home-about__marquee-item">
               <img src={logo} alt={`Client ${i + 1}`} className="home-about__marquee-logo" />
             </span>

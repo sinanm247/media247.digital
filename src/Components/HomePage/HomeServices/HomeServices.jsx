@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useSectionTheme } from '../../../Context/SectionThemeContext';
+import { useTheme } from '../../../Context/ThemeContext';
+import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './HomeServices.scss';
 
@@ -13,9 +15,15 @@ const SERVICES_THEME = {
 const { services } = SITE_CONTENT;
 
 export default function HomeServices() {
-  const sectionRef = useRef(null);
+  const sectionRef  = useRef(null);
+  const trackRef    = useRef(null);
+  const fillRef     = useRef(null);
+  const counterRef  = useRef(null);
   const { setSectionTheme } = useSectionTheme();
+  const { theme } = useTheme();
+  const themeServices = THEME_ASSETS[theme].services;
 
+  // Section theme observer
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return undefined;
@@ -24,31 +32,96 @@ export default function HomeServices() {
       ([entry]) => {
         if (entry.isIntersecting) setSectionTheme(SERVICES_THEME);
       },
-      { threshold: 0.15 },
+      { threshold: 0.05 },
     );
-
     observer.observe(section);
     return () => observer.disconnect();
   }, [setSectionTheme]);
 
-  // Reveal clip — same diagonal expand as HomeAbout.
-  // Both sides expand upward; right expands faster → incline toward right.
+  // Clip reveal + horizontal scroll driven by vertical scroll
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section) return undefined;
+    const track   = trackRef.current;
+    const fill    = fillRef.current;
+    const counter = counterRef.current;
+    if (!section || !track) return undefined;
 
+    const isMobile = () => window.innerWidth < 768;
+
+    // Cache padding-top so we don't call getComputedStyle on every scroll tick.
+    // The sticky child sits padding-top px below the section top, so horizontal
+    // scroll must only start once the sticky has actually pinned.
+    let paddingTop = 0;
+
+    // ── Set section height so vertical scroll equals horizontal travel ──────
+    const updateHeight = () => {
+      if (isMobile()) {
+        section.style.height = '';
+        track.style.transform = '';
+        return;
+      }
+      // Re-read padding on resize (it's a clamp value)
+      paddingTop = parseFloat(getComputedStyle(section).paddingTop) || 0;
+      const totalSlide = Math.max(0, track.scrollWidth - window.innerWidth);
+      // We add an extra window.innerHeight "transition buffer" to the section height.
+      // Without it, the Services sticky unpins at the exact same scroll position
+      // where the Stats section first enters the viewport with its transparent
+      // clip-path top. That exposes the Hero (always sticky at z-index 0) through
+      // Stats' transparent diagonal, making the Hero wordmark bleed through.
+      // The extra viewport height keeps the Services sticky pinned (black background
+      // covering the viewport) for the entire duration of Stats' reveal animation.
+      section.style.height = `${window.innerHeight + totalSlide + paddingTop + window.innerHeight}px`;
+    };
+
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+
+    // ── Scroll handler ───────────────────────────────────────────────────────
     const onScroll = () => {
-      const rect = section.getBoundingClientRect();
       const vh = window.innerHeight;
-      // Full vh range — animation completes when section top reaches viewport top.
-      const progress = Math.max(0, Math.min(1, (vh - rect.top) / vh));
-      section.style.setProperty('--services-progress', progress.toFixed(3));
+      const rect = section.getBoundingClientRect();
+
+      // Clip-path reveal progress (0 → 1 as section enters viewport)
+      const revealProgress = Math.max(0, Math.min(1, (vh - rect.top) / vh));
+      section.style.setProperty('--services-progress', revealProgress.toFixed(3));
+
+      if (isMobile()) return;
+
+      // Horizontal slide starts only after the sticky has pinned
+      // (i.e. after scrollY has passed section.offsetTop + paddingTop)
+      const scrollIntoSection = Math.max(0, window.scrollY - section.offsetTop - paddingTop);
+      const totalSlide = Math.max(0, track.scrollWidth - window.innerWidth);
+      const slide = Math.min(scrollIntoSection, totalSlide);
+      // Bail early if nothing to slide (avoids a no-op transform each frame)
+      if (totalSlide === 0) return;
+      track.style.transform = `translateX(-${slide}px)`;
+
+      // Progress indicator
+      if (fill) {
+        const pct = totalSlide > 0 ? (slide / totalSlide) * 100 : 0;
+        fill.style.width = `${pct.toFixed(1)}%`;
+      }
+      if (counter) {
+        // Which card is most in view
+        const numCards = services.list.length;
+        const cardIdx = Math.min(
+          Math.floor((slide / (totalSlide || 1)) * numCards),
+          numCards - 1,
+        );
+        counter.textContent = String(cardIdx + 1).padStart(2, '0');
+      }
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', updateHeight);
+    };
   }, []);
+
+  const totalCards = String(services.list.length).padStart(2, '0');
 
   return (
     <section
@@ -57,52 +130,75 @@ export default function HomeServices() {
       className="home-services"
       aria-labelledby="services-heading"
     >
-      {/* ── Section strip ──────────────────────────────────────────────── */}
-      <div className="home-services__strip">
-        <span className="home-services__strip-index">
-          <span className="home-services__strip-dot" aria-hidden="true" />
-          ({services.sectionNum})
-        </span>
-        <span className="home-services__strip-label">(Services)</span>
-        <span className="home-services__strip-copy">© {new Date().getFullYear()}</span>
-      </div>
+      <div className="home-services__sticky">
 
-      {/* ── Intro heading ──────────────────────────────────────────────── */}
-      <div className="home-services__intro-wrap">
-        <p className="home-services__intro" id="services-heading">
-          <span className="home-services__intro-bold">{services.introBold} </span>
-          <span className="home-services__intro-fade">{services.introFade}</span>
-        </p>
-      </div>
+        {/* ── Section strip ─────────────────────────────────────────────── */}
+        <div className="home-services__strip">
+          <span className="home-services__strip-index">
+            <span className="home-services__strip-dot" aria-hidden="true" />
+            ({services.sectionNum})
+          </span>
+          <span className="home-services__strip-label">(Services)</span>
+          <span className="home-services__strip-copy">© {new Date().getFullYear()}</span>
+        </div>
 
-      {/* ── Service rows ───────────────────────────────────────────────── */}
-      <ul className="home-services__list" role="list">
-        {services.list.map((item) => (
-          <li key={item.id} className="home-services__row">
-            <span className="home-services__row-num" aria-hidden="true">
-              {item.index}
-            </span>
+        {/* ── Intro heading ──────────────────────────────────────────────── */}
+        <div className="home-services__intro-wrap">
+          <p className="home-services__intro" id="services-heading">
+            <span className="home-services__intro-bold">{services.introBold} </span>
+            <span className="home-services__intro-fade">{services.introFade}</span>
+          </p>
+        </div>
 
-            <div className="home-services__row-img-wrap">
-              <img
-                className="home-services__row-img"
-                src={item.img}
-                alt={item.title}
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
+        {/* ── Horizontal card track ──────────────────────────────────────── */}
+        <div
+          ref={trackRef}
+          className="home-services__track"
+          aria-label="Services list"
+        >
+          {services.list.map((item) => (
+            <article key={item.id} className="home-services__card">
 
-            <div className="home-services__row-info">
-              <h3 className="home-services__row-title">{item.title}</h3>
-              <div className="home-services__row-bottom">
-                <span className="home-services__row-subtitle">{item.subtitle}</span>
-                <p className="home-services__row-desc">{item.description}</p>
+              {/* Left: text pane */}
+              <div className="home-services__card-body">
+                <span className="home-services__card-num" aria-hidden="true">
+                  {item.index}
+                </span>
+                <div className="home-services__card-info">
+                  <h3 className="home-services__card-title">{item.title}</h3>
+                  <span className="home-services__card-subtitle">{item.subtitle}</span>
+                  <p className="home-services__card-desc">{item.description}</p>
+                </div>
               </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+
+              {/* Right: image pane */}
+              <div className="home-services__card-img-wrap">
+                <img
+                  className="home-services__card-img"
+                  src={themeServices[item.id]}
+                  alt={item.title}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+            </article>
+          ))}
+        </div>
+
+        {/* ── Progress bar + counter ─────────────────────────────────────── */}
+        <div className="home-services__progress" aria-hidden="true">
+          <div className="home-services__progress-counter">
+            <span ref={counterRef} className="home-services__progress-current">01</span>
+            <span className="home-services__progress-sep"> / </span>
+            <span className="home-services__progress-total">{totalCards}</span>
+          </div>
+          <div className="home-services__progress-track">
+            <div ref={fillRef} className="home-services__progress-fill" />
+          </div>
+        </div>
+
+      </div>
     </section>
   );
 }

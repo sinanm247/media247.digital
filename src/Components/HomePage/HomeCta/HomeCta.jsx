@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import bannerCta from '../../../assets/Banners/Banner-2.webp';
-import ctaCard from '../../../assets/Images/Image-2.png';
+import { useTheme } from '../../../Context/ThemeContext';
+import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './HomeCta.scss';
 
@@ -13,6 +13,9 @@ const CROSS_POSITIONS = [
 
 export default function HomeCta() {
   const { headingLeft, headingRight, tagline, cta, ctaPath } = SITE_CONTENT.cta;
+  const { theme } = useTheme();
+  const assets = THEME_ASSETS[theme];
+  const bannerCta = assets.banners.banner2;
 
   return (
     <section className="home-cta" aria-label="Call to Action">
@@ -44,9 +47,9 @@ export default function HomeCta() {
             </h2>
 
             {/* Floating portrait card */}
-            <div className="home-cta__card" aria-hidden="true">
+            {/* <div className="home-cta__card" aria-hidden="true">
               <img src={ctaCard} alt="" className="home-cta__card-img" />
-            </div>
+            </div> */}
 
             <h2 className="home-cta__heading-right" aria-hidden="true">
               {headingRight}

@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
-import bannerImage from '../../../assets/Banners/Banner-1.webp';
 import Navbar from '../../Common/Navbar/Navbar';
 import { useSectionTheme } from '../../../Context/SectionThemeContext';
+import { useTheme } from '../../../Context/ThemeContext';
+import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './HomeHero.scss';
 
@@ -37,6 +38,9 @@ function HeroBadge() {
 export default function HomeHero() {
   const sectionRef = useRef(null);
   const { setSectionTheme } = useSectionTheme();
+  const { theme } = useTheme();
+  const assets = THEME_ASSETS[theme];
+  const isTheme2 = theme === 'theme-2';
 
   // Section theme observer
   useEffect(() => {
@@ -74,12 +78,16 @@ export default function HomeHero() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="home-hero" aria-labelledby="home-hero-title">
+    <section
+      ref={sectionRef}
+      className={`home-hero${isTheme2 ? ' home-hero--theme-2' : ''}`}
+      aria-labelledby="home-hero-title"
+    >
 
       {/* Background image + overlay */}
       <div className="home-hero__bg" aria-hidden="true">
         <img
-          src={bannerImage}
+          src={assets.heroBanner}
           alt=""
           className="home-hero__bg-img"
           loading="eager"
@@ -122,37 +130,39 @@ export default function HomeHero() {
       </div>
 
       {/* Bottom bar */}
-      <div className="home-hero__bottom">
+      {!isTheme2 && (
+        <div className="home-hero__bottom">
 
-        {/* Left: service tags + copyright strip */}
-        <div className="home-hero__bottom-left">
-          <ul className="home-hero__tags" aria-label="Core services">
-            {SERVICE_TAGS.map((tag, i) => (
-              <li key={tag} className="home-hero__tag">
-                {i === 0 && <em className="home-hero__tag-num" aria-hidden="true">01/</em>}
-                {tag}
-              </li>
-            ))}
-          </ul>
-
-          <div className="home-hero__footer-strip">
-            <span className="home-hero__copy">© {new Date().getFullYear()}</span>
-            <span className="home-hero__ticks" aria-hidden="true">
-              {Array.from({ length: 16 }).map((_, i) => (
-                <span key={i} className="home-hero__tick" />
+          {/* Left: service tags + copyright strip */}
+          <div className="home-hero__bottom-left">
+            <ul className="home-hero__tags" aria-label="Core services">
+              {SERVICE_TAGS.map((tag, i) => (
+                <li key={tag} className="home-hero__tag">
+                  {i === 0 && <em className="home-hero__tag-num" aria-hidden="true">01/</em>}
+                  {tag}
+                </li>
               ))}
-            </span>
-            <span className="home-hero__footer-label">Digital</span>
+            </ul>
+
+            <div className="home-hero__footer-strip">
+              <span className="home-hero__copy">© {new Date().getFullYear()}</span>
+              <span className="home-hero__ticks" aria-hidden="true">
+                {Array.from({ length: 16 }).map((_, i) => (
+                  <span key={i} className="home-hero__tick" />
+                ))}
+              </span>
+              <span className="home-hero__footer-label">Digital</span>
+            </div>
           </div>
-        </div>
 
-        {/* Large display wordmark */}
-        <div className="home-hero__wordmark" aria-hidden="true">
-          <span className="home-hero__word-a">MEDIA</span>
-          <span className="home-hero__word-b">247</span>
-        </div>
+          {/* Large display wordmark */}
+          <div className="home-hero__wordmark" aria-hidden="true">
+            <span className="home-hero__word-a">MEDIA</span>
+            <span className="home-hero__word-b">247</span>
+          </div>
 
-      </div>
+        </div>
+      )}
     </section>
   );
 }

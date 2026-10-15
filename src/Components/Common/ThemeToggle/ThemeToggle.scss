@@ -1,0 +1,109 @@
+// ── Theme Toggle — fixed bottom-right floating button ─────────────────────
+
+.theme-toggle {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 100px;
+  background: rgba(10, 10, 10, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  cursor: pointer;
+
+  // Smooth entry
+  opacity: 0;
+  transform: translateY(8px);
+  animation: theme-toggle-enter 0.5s 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.38);
+    background: rgba(18, 18, 18, 0.9);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+
+  // ── Label ────────────────────────────────────────────────────────────────
+  &__label {
+    font-family: inherit;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+    user-select: none;
+  }
+
+  // ── Track ────────────────────────────────────────────────────────────────
+  &__track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 56px;
+    height: 26px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  // ── Sliding pill ─────────────────────────────────────────────────────────
+  &__pill {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: calc(50% - 2px);
+    height: calc(100% - 4px);
+    border-radius: 100px;
+    background: #ffffff;
+    transition: left 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+
+    &--right {
+      left: calc(50%);
+    }
+  }
+
+  // ── Option labels (I / II) ────────────────────────────────────────────────
+  &__opt {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.5);
+    user-select: none;
+    transition: color 0.2s ease;
+
+    // Highlight the active side by targeting siblings relative to pill state
+  }
+
+  // When pill is on left → first opt is active
+  &__pill:not(&__pill--right) ~ &__opt:first-of-type,
+  // When pill is on right → second opt is active
+  &__pill--right ~ &__opt:last-of-type {
+    color: #111111;
+  }
+}
+
+@keyframes theme-toggle-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

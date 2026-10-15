@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { useSectionTheme } from '../../../Context/SectionThemeContext';
+import { useTheme } from '../../../Context/ThemeContext';
+import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './HomePortfolio.scss';
-
-import portfolioAll from '../../../assets/Portfolio/Portfolio-All.webp';
 
 const PORTFOLIO_THEME = {
   bgStart: '#ffffff',
@@ -43,6 +43,8 @@ function PortfolioMedia({ item }) {
 export default function HomePortfolio() {
   const sectionRef = useRef(null);
   const { setSectionTheme } = useSectionTheme();
+  const { theme } = useTheme();
+  const themePortfolio = THEME_ASSETS[theme].portfolio;
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -64,7 +66,7 @@ export default function HomePortfolio() {
     const section = sectionRef.current;
     if (!section) return undefined;
 
-    const STICKY_TOPS = [60, 80, 100, 120];
+    const STICKY_TOPS = [60, 80, 100, 120, 140, 160, 180];
 
     const onScroll = () => {
       const items = [...section.querySelectorAll('.home-portfolio__item')];
@@ -106,7 +108,13 @@ export default function HomePortfolio() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const firstImage = portfolio.items.find((i) => i.type === 'image');
+  // Merge text content from siteContent with src/type from themePortfolio
+  const portfolioItems = portfolio.items.map((item) => ({
+    ...item,
+    ...(themePortfolio[item.id] || {}),
+  }));
+
+  const portfolioAll = themePortfolio.all;
 
   return (
     <section
@@ -145,7 +153,7 @@ export default function HomePortfolio() {
 
         {/* Portfolio items list */}
         <div className="home-portfolio__list" id="portfolio-heading">
-          {portfolio.items.map((item) => (
+          {portfolioItems.map((item) => (
             <article key={item.id} className="home-portfolio__item">
               <div className="portfolio-item__media-wrap">
                 <PortfolioMedia item={item} />

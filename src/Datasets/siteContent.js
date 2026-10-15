@@ -1,30 +1,5 @@
-import portfolio1 from '../assets/Portfolio/Portfolio-1.webp';
-import portfolio2 from '../assets/Portfolio/Portfolio-2.mp4';
-import portfolio3 from '../assets/Portfolio/Portfolio-3.webp';
-import portfolio4 from '../assets/Portfolio/Portfolio-4.webp';
-
-import svcContentCreation      from '../assets/Services/Content-Creation.webp';
-import svcPerformanceMarketing  from '../assets/Services/Performance-Marketing.webp';
-import svcSocialMedia           from '../assets/Services/Social-Media-Managament.webp';
-import svcSeo                   from '../assets/Services/SEO.webp';
-import svcWebDev                from '../assets/Services/Website-Development.webp';
-import svcProgrammatic          from '../assets/Services/Programatic-Ads.webp';
-import svcGoogleAds             from '../assets/Services/Google-Ads.webp';
-
-import client1 from '../assets/Clients/Logo-1.png';
-import client2 from '../assets/Clients/Logo-2.png';
-import client3 from '../assets/Clients/Logo-3.png';
-import client4 from '../assets/Clients/Logo-4.png';
-import client5 from '../assets/Clients/Logo-5.png';
-import client6 from '../assets/Clients/Logo-6.png';
-import client7 from '../assets/Clients/Logo-7.png';
-import client8 from '../assets/Clients/Logo-8.png';
-import client9 from '../assets/Clients/Logo-9.png';
-import client10 from '../assets/Clients/Logo-10.png';
-import client11 from '../assets/Clients/Logo-11.png';
-import client12 from '../assets/Clients/Logo-12.png';
-import client13 from '../assets/Clients/Logo-13.png';
-import client14 from '../assets/Clients/Logo-14.png';
+// All image / asset references have been moved to themeAssets.js.
+// This file contains only text-based site content.
 
 export const SITE_CONTENT = {
   portfolio: {
@@ -33,43 +8,56 @@ export const SITE_CONTENT = {
     displayLine2: "24'",
     description: 'The work, with the numbers still in it.',
     cta: 'View All Work',
-    seeAllCount: '04',
+    seeAllCount: '07',
     items: [
       {
-        id: 'trident-luxury',
+        id: 'content-creation',
         index: '01',
-        service: 'Website Development',
-        client: 'Trident Luxury',
+        service: 'Content Creation',
+        client: 'Chaima Holdings',
         industry: 'Real Estate',
-        src: portfolio1,
-        type: 'image',
       },
       {
-        id: 'elite-paws',
+        id: 'google-ads',
         index: '02',
-        service: 'Website Development',
-        client: 'Elite Paws',
-        industry: 'Hospitality',
-        src: portfolio2,
-        type: 'video',
+        service: 'Google Ads',
+        client: 'NML Hair Care',
+        industry: 'Beauty & Personal Care',
       },
       {
-        id: 'media247-ooh',
+        id: 'performance-marketing',
         index: '03',
-        service: 'Social Media Management',
-        client: 'Media247',
-        industry: 'Outdoor Marketing Agency',
-        src: portfolio3,
-        type: 'image',
+        service: 'Performance Marketing',
+        client: 'Media247 Digital',
+        industry: 'Digital Marketing',
       },
       {
-        id: 'imedia247',
+        id: 'programmatic-ads',
         index: '04',
+        service: 'Programmatic Ads',
+        client: 'NML Hair Care',
+        industry: 'Beauty & Personal Care',
+      },
+      {
+        id: 'seo',
+        index: '05',
+        service: 'SEO',
+        client: 'Media247',
+        industry: 'Digital Agency',
+      },
+      {
+        id: 'social-media-management',
+        index: '06',
         service: 'Social Media Management',
-        client: 'iMedia247',
-        industry: 'Outdoor Marketing Agency',
-        src: portfolio4,
-        type: 'image',
+        client: 'XReal, Hoka, Stamn One',
+        industry: 'Lifestyle & Sports',
+      },
+      {
+        id: 'website-development',
+        index: '07',
+        service: 'Website Development',
+        client: 'Orange Advertising',
+        industry: 'Advertising Agency',
       },
     ],
   },
@@ -99,14 +87,8 @@ export const SITE_CONTENT = {
       },
     ],
     cta: 'Explore Our Work',
-    clients: [
-      client1, client2, client3, client4,
-      client5, client6, client7, client8,
-      client9, client10, client11, client12,
-      client13, client14,
-    ],
+    // clients array is now sourced from THEME_ASSETS[theme].clients
   },
-
 
   hero: {
     headline: 'We Help Brands Scale',
@@ -142,7 +124,6 @@ export const SITE_CONTENT = {
         subtitle: 'Creative Strategy',
         description:
           "Content that has a reason to exist beyond filling a calendar. We build it around what your audience is actually doing — not simply what the algorithm rewarded last month. If it doesn't connect to a conversion, we'll tell you before we make it.",
-        img: svcContentCreation,
       },
       {
         id: 'performance-marketing',
@@ -151,7 +132,6 @@ export const SITE_CONTENT = {
         subtitle: 'Paid Media & ROI',
         description:
           "We buy media with a number in mind — your cost per lead, your ROAS, your payback period. Every campaign launches with a ceiling and a kill date. We don't wait for the budget to run out before making a call.",
-        img: svcPerformanceMarketing,
       },
       {
         id: 'social-media-management',
@@ -160,7 +140,6 @@ export const SITE_CONTENT = {
         subtitle: 'Community & Growth',
         description:
           'Consistent, considered, and always pointed at something commercial. We manage your presence so it works alongside your paid activity, not independently of it.',
-        img: svcSocialMedia,
       },
       {
         id: 'seo',
@@ -169,7 +148,6 @@ export const SITE_CONTENT = {
         subtitle: 'Organic Visibility',
         description:
           "The kind of traffic that compounds. We work on what actually moves rankings — technical foundations, content that earns authority, and the search terms your buyers are using when they're ready to act.",
-        img: svcSeo,
       },
       {
         id: 'website-development',
@@ -178,7 +156,6 @@ export const SITE_CONTENT = {
         subtitle: 'Digital Presence',
         description:
           "Built to convert, not just to look good at the pitch. Every page we build has a job, and we measure whether it's doing it.",
-        img: svcWebDev,
       },
       {
         id: 'programmatic-ads',
@@ -187,7 +164,6 @@ export const SITE_CONTENT = {
         subtitle: 'Audience Targeting',
         description:
           "Your audience, found across the internet in real time, based on what they actually do — not just what they search. We target the right attention at the right moment, and we're specific about what that costs.",
-        img: svcProgrammatic,
       },
       // {
       //   id: 'google-ads',
@@ -196,7 +172,6 @@ export const SITE_CONTENT = {
       //   subtitle: 'Search & Display',
       //   description:
       //     'High-intent search, handled properly. We go after the terms that signal a buyer, and we manage bids, copy, and landing pages as one system — not three separate jobs.',
-      //   img: svcGoogleAds,
       // },
     ],
   },
@@ -245,7 +220,7 @@ export const SITE_CONTENT = {
   cta: {
     headingLeft: 'Scale Your',
     headingRight: 'Brand.',
-    tagline: 'Let\'s build your digital strategy together.',
+    tagline: "Let's build your digital strategy together.",
     cta: 'Get In Touch',
     ctaPath: '/contact',
   },
