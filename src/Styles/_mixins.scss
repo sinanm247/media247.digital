@@ -52,6 +52,42 @@
   justify-content: space-between;
 }
 
+// Inclined top, same motion as the home page.
+// Right edge rises faster, so the top settles as a slope.
+@mixin incline-clip($var: --incline-progress) {
+  padding-top: clamp(130px, 15vw, 180px);
+  clip-path: polygon(
+    0 calc(180px - var(#{$var}, 0) * 90px),
+    100% calc(180px - var(#{$var}, 0) * 180px),
+    100% 100%,
+    0 100%
+  );
+}
+
+// Solid wedge in the previous section's color. Hides the cut
+// when a sticky hero would otherwise show through.
+@mixin incline-curtain($color, $var: --incline-progress) {
+  padding-top: clamp(130px, 15vw, 180px);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    right: 0;
+    height: 202px;
+    background: $color;
+    z-index: 10;
+    pointer-events: none;
+    clip-path: polygon(
+      0 calc(180px - var(#{$var}, 0) * 90px),
+      100% calc(180px - var(#{$var}, 0) * 180px),
+      100% 0,
+      0 0
+    );
+  }
+}
+
 // --- Clamp text to N lines -----------------------------------------------
 @mixin line-clamp($lines: 2) {
   display: -webkit-box;

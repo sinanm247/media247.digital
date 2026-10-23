@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { useTheme } from '../../../Context/ThemeContext';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './HomeCta.scss';
@@ -13,9 +12,7 @@ const CROSS_POSITIONS = [
 
 export default function HomeCta() {
   const { headingLeft, headingRight, tagline, cta, ctaPath } = SITE_CONTENT.cta;
-  const { theme } = useTheme();
-  const assets = THEME_ASSETS[theme];
-  const bannerCta = assets.banners.banner2;
+  const bannerCta = THEME_ASSETS['theme-1'].banners.banner3;
 
   return (
     <section className="home-cta" aria-label="Call to Action">

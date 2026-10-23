@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { useSectionTheme } from '../../../Context/SectionThemeContext';
-import { useTheme } from '../../../Context/ThemeContext';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './HomeAbout.scss';
@@ -13,12 +12,11 @@ const ABOUT_SECTION_THEME = {
 };
 
 const { about } = SITE_CONTENT;
+const assets = THEME_ASSETS['theme-1'];
 
 export default function HomeAbout() {
   const sectionRef = useRef(null);
   const { setSectionTheme } = useSectionTheme();
-  const { theme } = useTheme();
-  const assets = THEME_ASSETS[theme];
 
   // Section theme
   useEffect(() => {

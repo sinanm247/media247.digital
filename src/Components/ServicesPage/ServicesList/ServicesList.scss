@@ -1,0 +1,155 @@
+@use '../../../Styles/variables' as *;
+@use '../../../Styles/mixins' as *;
+
+.services-list {
+  position: relative;
+  z-index: 2;
+  background: #111111;
+  color: #ffffff;
+  padding-bottom: clamp(48px, 6vw, 80px);
+  @include incline-clip;
+
+  .about-strip {
+    border-top-color: rgba(255, 255, 255, 0.35);
+
+    .about-strip__index,
+    .about-strip__label,
+    .about-strip__copy {
+      color: rgba(255, 255, 255, 0.72);
+    }
+  }
+
+  &__lead {
+    @include page-gutter;
+    padding-top: clamp(48px, 6vw, 80px);
+  }
+
+  &__statement {
+    margin: 0;
+    font-family: $font-sans;
+    font-size: clamp(2.1rem, 4.7vw, 70px);
+    font-weight: $fw-medium;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: #ffffff;
+    text-indent: 27%;
+  }
+
+  .is-fade {
+    display: block;
+    text-indent: 0;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  &__rows {
+    @include page-gutter;
+    margin-top: clamp(36px, 5vw, 64px);
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: minmax(140px, 260px) minmax(220px, 461px) minmax(0, 1fr);
+    gap: clamp(18px, 2.6vw, 40px);
+    align-items: stretch;
+    padding-block: clamp(28px, 3.2vw, 40px);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    opacity: 0.38;
+    transition: opacity 0.35s ease;
+
+    &:last-child {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    &.is-active {
+      opacity: 1;
+    }
+  }
+
+  &__index {
+    font-family: $font-sans;
+    font-size: clamp(5.5rem, 12vw, 168px);
+    font-weight: $fw-medium;
+    letter-spacing: -0.04em;
+    line-height: 0.85;
+    color: #ffffff;
+  }
+
+  &__media {
+    min-width: 0;
+  }
+
+  &__media img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 461 / 323;
+    object-fit: cover;
+    border-radius: 5px;
+    background: #1c1c1c;
+  }
+
+  &__copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 28px;
+    min-width: 0;
+    padding-top: 6px;
+  }
+
+  &__title {
+    margin: 0;
+    font-family: $font-sans;
+    font-size: clamp(2rem, 3.6vw, 56px);
+    font-weight: $fw-medium;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: #ffffff;
+  }
+
+  &__subtitle {
+    margin: 0;
+    font-family: $font-sans;
+    font-size: 16px;
+    font-weight: $fw-medium;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+    color: #ffffff;
+  }
+
+  &__desc {
+    max-width: 42ch;
+    margin: 8px 0 0;
+    font-family: $font-sans;
+    font-size: 16px;
+    font-weight: $fw-regular;
+    letter-spacing: -0.3px;
+    line-height: 1.28;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  @include respond-below(lg) {
+    &__row {
+      grid-template-columns: minmax(88px, 140px) minmax(180px, 1fr) minmax(180px, 1fr);
+    }
+
+    &__index {
+      font-size: clamp(4rem, 10vw, 96px);
+    }
+  }
+
+  @include respond-below(md) {
+    &__row {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      opacity: 1;
+    }
+
+    &__index {
+      font-size: 72px;
+    }
+
+    &__copy {
+      gap: 14px;
+    }
+  }
+}

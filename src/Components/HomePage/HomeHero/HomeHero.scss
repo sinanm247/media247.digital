@@ -55,60 +55,6 @@
     z-index: 2;
   }
 
-  // ── Hero badge (top-right slot) ────────────────────────────────────────────
-  .hero-badge {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: $radius-sm;
-    padding: 8px 12px 8px 10px;
-    cursor: default;
-
-    &__pip {
-      width: 8px;
-      height: 8px;
-      flex-shrink: 0;
-      border-radius: 50%;
-      background: $primary;
-      box-shadow: 0 0 6px rgba($primary, 0.8);
-    }
-
-    &__body {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-
-    &__top {
-      font-family: $font-sans;
-      font-size: 0.72rem;
-      font-weight: $fw-semibold;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #ffffff;
-      line-height: 1.2;
-    }
-
-    &__bottom {
-      font-family: $font-serif;
-      font-size: 0.82rem;
-      font-style: italic;
-      color: rgba(255, 255, 255, 0.72);
-      line-height: 1.2;
-    }
-
-    &__corner {
-      font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.5);
-      align-self: flex-start;
-      margin-top: 2px;
-    }
-  }
-
   // ── Decorative cross markers ───────────────────────────────────────────────
   &__cross {
     position: absolute;
@@ -388,10 +334,6 @@
     &__word-a,
     &__word-b {
       font-size: clamp(2.4rem, 14vw, 4.5rem);
-    }
-
-    .hero-badge {
-      display: none;
     }
 
     &__cross {

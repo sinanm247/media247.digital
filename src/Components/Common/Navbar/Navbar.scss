@@ -8,6 +8,7 @@
   color: var(--section-text);
 
   &__inner {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -38,9 +39,13 @@
   }
 
   &__nav {
-    flex: 1;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
+    width: max-content;
   }
 
   &__list {
@@ -89,7 +94,7 @@
     flex-shrink: 0;
     display: flex;
     justify-content: flex-end;
-    min-width: clamp(90px, 10vw, 130px);
+    margin-left: auto;
   }
 
   // ── Hero variant ───────────────────────────────────────────────────────────
@@ -98,6 +103,20 @@
 
     .navbar__inner {
       @include page-gutter;
+    }
+  }
+
+  // ── Light overlay (About hero: dark type on a pale image) ────────────────
+  &--on-light {
+    color: #161616;
+
+    .navbar__inner {
+      @include page-gutter;
+      position: relative;
+    }
+
+    .navbar__logo {
+      filter: none;
     }
   }
 
@@ -129,6 +148,8 @@
     }
 
     &__nav {
+      position: static;
+      transform: none;
       order: 3;
       width: 100%;
       justify-content: flex-start;

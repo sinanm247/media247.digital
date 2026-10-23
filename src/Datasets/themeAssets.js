@@ -88,6 +88,7 @@ import t2Client14 from '../assets/Theme-2/Clients/Logo-14.png';
 // Images
 import t2Image1 from '../assets/Theme-2/Images/Image-1.webp';
 import t2Image2 from '../assets/Theme-2/Images/Image-2.webp';
+import t2Image3 from '../assets/Theme-2/Images/Image-1-1.webp';
 
 // Logo
 import t2Logo      from '../assets/Theme-2/Logo/M247D-Logo.png';
@@ -183,6 +184,7 @@ export const THEME_ASSETS = {
     images: {
       image1: t2Image1,
       image2: t2Image2,
+      image3: t2Image3,
     },
 
     logo: {

@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { useSectionTheme } from '../../../Context/SectionThemeContext';
-import { useTheme } from '../../../Context/ThemeContext';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './HomePortfolio.scss';
@@ -43,8 +42,7 @@ function PortfolioMedia({ item }) {
 export default function HomePortfolio() {
   const sectionRef = useRef(null);
   const { setSectionTheme } = useSectionTheme();
-  const { theme } = useTheme();
-  const themePortfolio = THEME_ASSETS[theme].portfolio;
+  const themePortfolio = THEME_ASSETS['theme-1'].portfolio;
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -61,45 +59,49 @@ export default function HomePortfolio() {
     return () => observer.disconnect();
   }, [setSectionTheme]);
 
-  // Scroll-driven scale: cards shrink continuously as the next card scrolls over them
+  // Cards glide into the sticky stack instead of stopping dead at the top.
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return undefined;
 
     const STICKY_TOPS = [60, 80, 100, 120, 140, 160, 180];
+    const RANGE = 340;
+
+    // 1 at the stick point, matching scroll speed where the glide starts.
+    const settle = (distance) => {
+      const u = Math.min(1, Math.max(0, distance / RANGE));
+      return u * u * (2 - u);
+    };
 
     const onScroll = () => {
       const items = [...section.querySelectorAll('.home-portfolio__item')];
-      const vh = window.innerHeight;
-
-      const scrollIntoSection = Math.max(0, window.scrollY - section.offsetTop);
-      const sectionProgress = Math.min(1, scrollIntoSection / section.offsetHeight);
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       items.forEach((item, i) => {
-        const rect = item.getBoundingClientRect();
-        const myTop = STICKY_TOPS[i] ?? 60 + i * 20;
+        const card = item.querySelector('.home-portfolio__card');
+        if (!card) return;
 
-        if (rect.top > myTop) {
-          item.style.transform = '';
-          return;
+        const myTop = STICKY_TOPS[i] ?? 60 + i * 20;
+        const distance = item.getBoundingClientRect().top - myTop;
+
+        let arrive = 0;
+        if (!reduce && distance > 0 && distance < RANGE) {
+          arrive = RANGE * settle(distance) - distance;
         }
 
-        let scale = 1;
+        let cover = 0;
+        if (!reduce) {
+          items.slice(i + 1).forEach((next, offset) => {
+            const j = i + 1 + offset;
+            const nextTop = STICKY_TOPS[j] ?? 60 + j * 20;
+            const nextDistance = next.getBoundingClientRect().top - nextTop;
+            cover += 1 - settle(Math.max(0, nextDistance));
+          });
+        }
 
-        items.slice(i + 1).forEach((next, offset) => {
-          const j = i + 1 + offset;
-          const nextStickyTop = STICKY_TOPS[j] ?? 60 + j * 20;
-          const nextRect = next.getBoundingClientRect();
-          const progress = Math.min(1, Math.max(0,
-            (vh - nextRect.top) / (vh - nextStickyTop),
-          ));
-          scale -= progress * 0.04;
-        });
-
-        const depthFromFront = items.length - 1 - i;
-        scale -= sectionProgress * depthFromFront * 0.02;
-
-        item.style.transform = `scale(${Math.max(0.78, scale).toFixed(3)})`;
+        const scale = Math.max(0.84, 1 - cover * 0.04);
+        const recede = Math.min(cover, 4) * -8;
+        card.style.transform = `translate3d(0, ${(arrive + recede).toFixed(2)}px, 0) scale(${scale.toFixed(3)})`;
       });
     };
 
@@ -155,19 +157,21 @@ export default function HomePortfolio() {
         <div className="home-portfolio__list" id="portfolio-heading">
           {portfolioItems.map((item) => (
             <article key={item.id} className="home-portfolio__item">
-              <div className="portfolio-item__media-wrap">
-                <PortfolioMedia item={item} />
-              </div>
-              <div className="portfolio-item__meta">
-                <span className="portfolio-item__index">{item.index}</span>
-                <div className="portfolio-item__info">
-                  <span className="portfolio-item__service">{item.service}</span>
-                  <span className="portfolio-item__client">
-                    {item.client}
-                    <em className="portfolio-item__industry"> — {item.industry}</em>
-                  </span>
+              <div className="home-portfolio__card">
+                <div className="portfolio-item__media-wrap">
+                  <PortfolioMedia item={item} />
                 </div>
-                <span className="portfolio-item__year">© {new Date().getFullYear()}</span>
+                <div className="portfolio-item__meta">
+                  <span className="portfolio-item__index">{item.index}</span>
+                  <div className="portfolio-item__info">
+                    <span className="portfolio-item__service">{item.service}</span>
+                    <span className="portfolio-item__client">
+                      {item.client}
+                      <em className="portfolio-item__industry"> — {item.industry}</em>
+                    </span>
+                  </div>
+                  <span className="portfolio-item__year">© {new Date().getFullYear()}</span>
+                </div>
               </div>
             </article>
           ))}

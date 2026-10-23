@@ -1,0 +1,63 @@
+@use '../../../Styles/variables' as *;
+@use '../../../Styles/mixins' as *;
+
+.about-strip {
+  @include page-gutter;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-top: 1px solid $grey-300;
+
+  &__index,
+  &__label,
+  &__copy {
+    font-family: $font-sans;
+    font-size: 0.75rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.06em;
+    color: $grey-700;
+  }
+
+  &__index {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $primary;
+    flex-shrink: 0;
+  }
+
+  &__label {
+    margin-left: auto;
+    margin-right: 20px;
+  }
+
+  &--dark {
+    position: relative;
+    border-top-color: rgba(255, 255, 255, 0.16);
+
+    .about-strip__index,
+    .about-strip__label,
+    .about-strip__copy {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .about-strip__dot {
+      background: #ffffff;
+    }
+
+    .about-strip__label {
+      position: absolute;
+      left: 50%;
+      margin: 0;
+      transform: translateX(-50%);
+    }
+  }
+}

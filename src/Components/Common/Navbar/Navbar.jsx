@@ -1,12 +1,12 @@
 import { Link, NavLink } from 'react-router-dom';
-import { useTheme } from '../../../Context/ThemeContext';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { NAV_LINKS } from '../../../Datasets/navigation';
+import StartProjectCard from '../StartProjectCard/StartProjectCard';
 import './Navbar.scss';
 
 export default function Navbar({ variant = 'default', rightSlot }) {
-  const { theme } = useTheme();
-  const logo = THEME_ASSETS[theme].logo.main;
+  const logo = THEME_ASSETS['theme-1'].logo.main;
+  const slot = rightSlot === undefined ? <StartProjectCard /> : rightSlot;
 
   return (
     <header className={`navbar navbar--${variant}`}>
@@ -37,7 +37,7 @@ export default function Navbar({ variant = 'default', rightSlot }) {
         </nav>
 
         <div className="navbar__right">
-          {rightSlot ?? null}
+          {slot}
         </div>
       </div>
     </header>

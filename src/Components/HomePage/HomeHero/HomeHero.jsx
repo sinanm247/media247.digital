@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Navbar from '../../Common/Navbar/Navbar';
 import { useSectionTheme } from '../../../Context/SectionThemeContext';
-import { useTheme } from '../../../Context/ThemeContext';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './HomeHero.scss';
@@ -21,26 +20,11 @@ const CROSS_POSITIONS = [
 ];
 
 const SERVICE_TAGS = ['Content Creation', 'Performance Marketing', 'Social Media'];
-
-function HeroBadge() {
-  return (
-    <div className="hero-badge" aria-label="Data-driven digital marketing">
-      <span className="hero-badge__pip" aria-hidden="true" />
-      <div className="hero-badge__body">
-        <span className="hero-badge__top">Data-Driven</span>
-        <span className="hero-badge__bottom">Digital Marketing</span>
-      </div>
-      <span className="hero-badge__corner" aria-hidden="true">↗</span>
-    </div>
-  );
-}
+const assets = THEME_ASSETS['theme-1'];
 
 export default function HomeHero() {
   const sectionRef = useRef(null);
   const { setSectionTheme } = useSectionTheme();
-  const { theme } = useTheme();
-  const assets = THEME_ASSETS[theme];
-  const isTheme2 = theme === 'theme-2';
 
   // Section theme observer
   useEffect(() => {
@@ -80,7 +64,7 @@ export default function HomeHero() {
   return (
     <section
       ref={sectionRef}
-      className={`home-hero${isTheme2 ? ' home-hero--theme-2' : ''}`}
+      className="home-hero"
       aria-labelledby="home-hero-title"
     >
 
@@ -96,8 +80,7 @@ export default function HomeHero() {
         <span className="home-hero__bg-overlay" />
       </div>
 
-      {/* Navbar: logo | centered nav | badge */}
-      <Navbar variant="hero" rightSlot={<HeroBadge />} />
+      <Navbar variant="hero" />
 
       {/* Decorative cross markers */}
       {CROSS_POSITIONS.map((pos, i) => (
@@ -129,9 +112,7 @@ export default function HomeHero() {
         </a>
       </div>
 
-      {/* Bottom bar */}
-      {!isTheme2 && (
-        <div className="home-hero__bottom">
+      <div className="home-hero__bottom">
 
           {/* Left: service tags + copyright strip */}
           <div className="home-hero__bottom-left">
@@ -162,7 +143,6 @@ export default function HomeHero() {
           </div>
 
         </div>
-      )}
     </section>
   );
 }

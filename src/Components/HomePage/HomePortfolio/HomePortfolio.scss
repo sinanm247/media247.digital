@@ -150,8 +150,6 @@
   &__item {
     position: sticky;
     background: #ffffff;
-    transform-origin: top center;
-    will-change: transform;
 
     &:nth-child(1) { top: 60px;  z-index: 1; }
     &:nth-child(2) { top: 80px;  z-index: 2; }
@@ -160,6 +158,12 @@
     &:nth-child(5) { top: 140px; z-index: 5; }
     &:nth-child(6) { top: 160px; z-index: 6; }
     &:nth-child(7) { top: 180px; z-index: 7; }
+  }
+
+  &__card {
+    background: #ffffff;
+    transform-origin: top center;
+    will-change: transform;
   }
 }
 

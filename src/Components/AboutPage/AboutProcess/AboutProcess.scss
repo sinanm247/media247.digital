@@ -1,0 +1,152 @@
+@use '../../../Styles/variables' as *;
+@use '../../../Styles/mixins' as *;
+
+.about-process {
+  position: relative;
+  z-index: 2;
+  background: $white;
+  color: $text;
+  @include incline-clip;
+
+  &__statement {
+    @include page-gutter;
+    margin: 0;
+    padding-top: clamp(40px, 5vw, 72px);
+    padding-bottom: clamp(8px, 1.5vw, 16px);
+    font-family: $font-sans;
+    font-size: clamp(2rem, 4.86vw, 70px);
+    font-weight: $fw-medium;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: #000000;
+    text-indent: 27%;
+  }
+
+  &__media {
+    @include page-gutter;
+    margin: clamp(28px, 4vw, 40px) 0 0;
+  }
+
+  &__media-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 20px;
+    background: #0a0a0a;
+  }
+
+  &__list {
+    @include page-gutter;
+    padding-top: clamp(36px, 4.5vw, 56px);
+    padding-bottom: clamp(48px, 7vw, 88px);
+  }
+
+  &__step {
+    display: grid;
+    grid-template-columns: 72px minmax(220px, 0.9fr) minmax(240px, 1fr);
+    gap: clamp(16px, 3vw, 48px);
+    align-items: start;
+    padding-block: clamp(28px, 4vw, 48px);
+    border-top: 1px solid $grey-200;
+
+    &:last-child {
+      border-bottom: 1px solid $grey-200;
+    }
+  }
+
+  &__index {
+    font-family: $font-sans;
+    font-size: 0.82rem;
+    font-weight: $fw-light;
+    letter-spacing: 0.04em;
+    line-height: 56px;
+    color: rgba(0, 0, 0, 0.45);
+  }
+
+  &__title {
+    margin: 0;
+    font-family: $font-sans;
+    font-size: 56px;
+    font-weight: $fw-medium;
+    letter-spacing: -1.7px;
+    line-height: 56px;
+    color: #000000;
+  }
+
+  &__text {
+    max-width: 42ch;
+    margin: 0 0 28px;
+    font-size: 16px;
+    font-weight: $fw-regular;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  &__scope-label {
+    margin: 0 0 14px;
+    font-size: 16px;
+    font-weight: $fw-medium;
+    letter-spacing: 0;
+    line-height: 1.4;
+    color: #000000;
+  }
+
+  &__scope ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__scope li {
+    position: relative;
+    padding-left: 16px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.5);
+
+    &::before {
+      content: '+';
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      color: $grey-500;
+    }
+  }
+
+  @include respond-below(lg) {
+    &__step {
+      grid-template-columns: 56px 1fr;
+    }
+
+    &__title,
+    &__scope {
+      grid-column: 2;
+    }
+  }
+
+  @include respond-below(md) {
+    &__step {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    &__index {
+      line-height: 1.2;
+    }
+
+    &__title {
+      font-size: clamp(2.2rem, 10vw, 3rem);
+      line-height: 1;
+      letter-spacing: -1.2px;
+    }
+
+    &__scope {
+      grid-column: auto;
+      padding-top: 8px;
+    }
+  }
+}

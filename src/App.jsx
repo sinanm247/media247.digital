@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import AppRouter from './Components/AppRouter/AppRouter';
 import AppLoader from './Components/AppLoader/AppLoader';
 import Footer from './Components/Common/Footer/Footer';
-import ThemeToggle from './Components/Common/ThemeToggle/ThemeToggle';
+// import ThemeToggle from './Components/Common/ThemeToggle/ThemeToggle';
 import { AppLoaderContext } from './Context/AppLoaderContext';
 import { SectionThemeProvider } from './Context/SectionThemeContext';
 import { ThemeProvider } from './Context/ThemeContext';
@@ -30,7 +30,7 @@ function App() {
               <Footer />
             </Fragment>
           </div>
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
         </SectionThemeProvider>
       </ThemeProvider>
     </AppLoaderContext.Provider>

@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { useSectionTheme } from '../../../Context/SectionThemeContext';
-import { useTheme } from '../../../Context/ThemeContext';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './HomeServices.scss';
@@ -20,8 +19,7 @@ export default function HomeServices() {
   const fillRef     = useRef(null);
   const counterRef  = useRef(null);
   const { setSectionTheme } = useSectionTheme();
-  const { theme } = useTheme();
-  const themeServices = THEME_ASSETS[theme].services;
+  const themeServices = THEME_ASSETS['theme-1'].services;
 
   // Section theme observer
   useEffect(() => {

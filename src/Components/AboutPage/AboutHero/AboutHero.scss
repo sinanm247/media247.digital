@@ -1,0 +1,222 @@
+@use '../../../Styles/variables' as *;
+@use '../../../Styles/mixins' as *;
+
+.about-pin {
+  position: relative;
+}
+
+.about-hero {
+  --hero-frame: min(1080px, 78vw, calc(62svh * 16 / 9));
+
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  height: 100vh;
+  height: 100svh;
+  transform: translateY(calc(var(--scroll-progress, 0) * -100px));
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+  color: #161616;
+  background: #ececec;
+
+  &__bg {
+    position: absolute;
+    inset: -8%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  &__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+    filter: blur(26px) saturate(0.85) brightness(1.05);
+    transform: scale(1.08);
+  }
+
+  .navbar--on-light {
+    position: relative;
+    z-index: 2;
+  }
+
+  &__stage {
+    position: relative;
+    z-index: 1;
+    min-height: 0;
+    display: grid;
+    place-items: center;
+    padding-inline: $page-gutter;
+  }
+
+  &__frame {
+    position: relative;
+    width: var(--hero-frame);
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  &__frame-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 62%;
+  }
+
+  &__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.28) 0%,
+      rgba(0, 0, 0, 0.08) 34%,
+      transparent 58%
+    );
+    pointer-events: none;
+  }
+
+  &__plus {
+    position: absolute;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    font-family: $font-sans;
+    font-size: 1.45rem;
+    font-weight: $fw-regular;
+    line-height: 1;
+    color: #ffffff;
+    // Stroke keeps the mark readable on both the grey field and the black hand.
+    text-shadow:
+      0 0 2px rgba(0, 0, 0, 0.9),
+      1px 0 0 rgba(0, 0, 0, 0.75),
+      -1px 0 0 rgba(0, 0, 0, 0.75),
+      0 1px 0 rgba(0, 0, 0, 0.75),
+      0 -1px 0 rgba(0, 0, 0, 0.75);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  // The photo stays light at the sides, so the caption band needs a floor.
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 34%;
+    pointer-events: none;
+    background: linear-gradient(
+      to top,
+      rgba(8, 8, 8, 0.78) 0%,
+      rgba(8, 8, 8, 0.5) 42%,
+      rgba(8, 8, 8, 0) 100%
+    );
+  }
+
+  &__title {
+    position: absolute;
+    z-index: 2;
+    left: 6%;
+    right: 6%;
+    top: 54%;
+    transform: translateY(-50%);
+    margin: 0;
+    text-align: center;
+    font-family: $font-sans;
+    font-size: clamp(3.4rem, 7.5vw, 7.25rem);
+    font-weight: $fw-medium;
+    letter-spacing: -0.04em;
+    line-height: 0.92;
+    color: #ffffff;
+    text-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  }
+
+  &__meta {
+    position: relative;
+    z-index: 2;
+    width: var(--hero-frame);
+    margin-inline: auto;
+    margin-bottom: clamp(18px, 3vh, 32px);
+    display: grid;
+    grid-template-columns: 1fr minmax(220px, 520px) 1fr;
+    align-items: start;
+    column-gap: 16px;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65), 0 8px 22px rgba(0, 0, 0, 0.45);
+  }
+
+  &__meta-label,
+  &__meta-year,
+  &__meta-copy {
+    font-family: $font-sans;
+    font-size: 0.78rem;
+    font-weight: $fw-regular;
+    letter-spacing: 0.01em;
+    line-height: 1.45;
+  }
+
+  &__meta-year {
+    justify-self: end;
+  }
+
+  &__meta-copy {
+    margin: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @include respond-below(lg) {
+    --hero-frame: min(calc(100% - 48px), calc(52svh * 16 / 9));
+
+    &__frame,
+    &__meta {
+      width: var(--hero-frame);
+    }
+
+    &__title {
+      font-size: clamp(2.8rem, 8vw, 4.6rem);
+    }
+  }
+
+  @include respond-below(md) {
+    &__stage {
+      padding-inline: 16px;
+    }
+
+    --hero-frame: calc(100% - 32px);
+
+    &__frame {
+      width: var(--hero-frame);
+      aspect-ratio: 16 / 9;
+      height: auto;
+      border-radius: 12px;
+    }
+
+    &__title {
+      font-size: clamp(2.15rem, 11vw, 3.2rem);
+      top: 58%;
+    }
+
+    &__plus {
+      font-size: 0.95rem;
+    }
+
+    &__meta {
+      width: var(--hero-frame);
+      margin-bottom: 78px;
+      grid-template-columns: 1fr;
+      row-gap: 6px;
+      justify-items: center;
+      text-align: center;
+    }
+
+    &__meta-label,
+    &__meta-year {
+      justify-self: center;
+    }
+  }
+}
