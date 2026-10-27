@@ -7,6 +7,10 @@ export const SITE_CONTENT = {
     displayLine1: 'WRK.',
     displayLine2: "24'",
     description: 'The work, with the numbers still in it.',
+    pageIndex: '01',
+    pageLabel: 'Work',
+    statementBold: 'The work we can put a name on, from the first cut to the job that paid for itself,',
+    statementFade: 'still on it.',
     cta: 'View All Work',
     seeAllCount: '07',
     items: [
@@ -114,7 +118,7 @@ export const SITE_CONTENT = {
 
   services: {
     sectionNum: '03',
-    introBold: 'The full stack of what we offer,',
+    introBold: 'The full stack of what we offer, from the first plan to the media that pays for itself,',
     introFade: 'broken down.',
     list: [
       {

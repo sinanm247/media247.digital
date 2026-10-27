@@ -1,5 +1,8 @@
 import { useEffect, useRef } from 'react';
+import LineReveal from '../../Common/LineReveal/LineReveal';
+import ServicesThemeToggle from '../../Common/ServicesThemeToggle/ServicesThemeToggle';
 import { useSectionTheme } from '../../../Context/SectionThemeContext';
+import { useServicesTheme } from '../../../Context/ServicesThemeContext';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './HomeServices.scss';
@@ -19,7 +22,8 @@ export default function HomeServices() {
   const fillRef     = useRef(null);
   const counterRef  = useRef(null);
   const { setSectionTheme } = useSectionTheme();
-  const themeServices = THEME_ASSETS['theme-1'].services;
+  const { theme: servicesTheme } = useServicesTheme();
+  const themeServices = THEME_ASSETS[servicesTheme].services;
 
   // Section theme observer
   useEffect(() => {
@@ -61,14 +65,10 @@ export default function HomeServices() {
       // Re-read padding on resize (it's a clamp value)
       paddingTop = parseFloat(getComputedStyle(section).paddingTop) || 0;
       const totalSlide = Math.max(0, track.scrollWidth - window.innerWidth);
-      // We add an extra window.innerHeight "transition buffer" to the section height.
-      // Without it, the Services sticky unpins at the exact same scroll position
-      // where the Stats section first enters the viewport with its transparent
-      // clip-path top. That exposes the Hero (always sticky at z-index 0) through
-      // Stats' transparent diagonal, making the Hero wordmark bleed through.
-      // The extra viewport height keeps the Services sticky pinned (black background
-      // covering the viewport) for the entire duration of Stats' reveal animation.
-      section.style.height = `${window.innerHeight + totalSlide + paddingTop + window.innerHeight}px`;
+      // Short settle after the last card. The sticky lets go soon after 06
+      // is in view, so Stats arrives without a long empty scrollbar travel.
+      const tail = window.innerHeight * 0.35;
+      section.style.height = `${window.innerHeight + totalSlide + paddingTop + tail}px`;
     };
 
     updateHeight();
@@ -137,14 +137,17 @@ export default function HomeServices() {
             ({services.sectionNum})
           </span>
           <span className="home-services__strip-label">(Services)</span>
+          <ServicesThemeToggle />
           <span className="home-services__strip-copy">© {new Date().getFullYear()}</span>
         </div>
 
         {/* ── Intro heading ──────────────────────────────────────────────── */}
         <div className="home-services__intro-wrap">
           <p className="home-services__intro" id="services-heading">
-            <span className="home-services__intro-bold">{services.introBold} </span>
-            <span className="home-services__intro-fade">{services.introFade}</span>
+            <LineReveal indent="38%">
+              <span className="home-services__intro-bold">{services.introBold} </span>
+              <span className="home-services__intro-fade">{services.introFade}</span>
+            </LineReveal>
           </p>
         </div>
 
@@ -159,10 +162,10 @@ export default function HomeServices() {
 
               {/* Left: text pane */}
               <div className="home-services__card-body">
-                <span className="home-services__card-num" aria-hidden="true">
-                  {item.index}
-                </span>
                 <div className="home-services__card-info">
+                  <span className="home-services__card-num" aria-hidden="true">
+                    {item.index}
+                  </span>
                   <h3 className="home-services__card-title">{item.title}</h3>
                   <span className="home-services__card-subtitle">{item.subtitle}</span>
                   <p className="home-services__card-desc">{item.description}</p>

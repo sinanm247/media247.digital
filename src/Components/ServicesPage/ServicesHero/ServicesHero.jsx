@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Navbar from '../../Common/Navbar/Navbar';
+import { enterStyle } from '../../Common/Entrance/enterStyle';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './ServicesHero.scss';
@@ -28,7 +29,7 @@ export default function ServicesHero() {
   return (
     <section ref={sectionRef} className="services-hero" aria-labelledby="services-hero-title">
       <div className="services-hero__bg" aria-hidden="true">
-        <img src={banner} alt="" className="services-hero__bg-img" />
+        <img src={banner} alt="" className="services-hero__bg-img enter-media" />
         <span className="services-hero__shade" />
       </div>
 
@@ -36,14 +37,18 @@ export default function ServicesHero() {
 
       <div className="services-hero__bottom">
         <h1 id="services-hero-title" className="services-hero__title">
-          <span className="services-hero__line">Our</span>
-          <span className="services-hero__line">
-            Services
-            <sup className="services-hero__count">({count})</sup>
+          <span className="services-hero__line enter-rise" style={enterStyle(100, 28, 1050, 'spring')}>
+            <span className="enter-rise__in">Our</span>
+          </span>
+          <span className="services-hero__line enter-rise" style={enterStyle(200, 28, 1050, 'spring')}>
+            <span className="enter-rise__in">
+              Services
+              <sup className="services-hero__count">({count})</sup>
+            </span>
           </span>
         </h1>
-        <p className="services-hero__caption">
-          {introBold} {introFade}
+        <p className="services-hero__caption enter-rise" style={enterStyle(400, 16, 1050, 'spring')}>
+          <span className="enter-rise__in">{introBold} {introFade}</span>
         </p>
       </div>
     </section>

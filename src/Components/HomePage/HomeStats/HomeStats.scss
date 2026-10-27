@@ -4,18 +4,13 @@
 // ── Section shell ────────────────────────────────────────────────────────────
 .home-stats {
   position: relative;
-  z-index: 3; // Above Services (z-index:2) so clip reveals dark Services behind it
+  z-index: 3; // Above Services (z-index: 2)
   background: $white;
   color: $text;
-  padding-top: clamp(130px, 15vw, 180px);
 
-  // Diagonal reveal — white section clips over dark Services, same as About over Hero.
-  clip-path: polygon(
-    0    calc(180px - var(--stats-progress, 0) * 90px),
-    100% calc(180px - var(--stats-progress, 0) * 180px),
-    100% 100%,
-    0    100%
-  );
+  // Solid black wedge in the Services color. The section stays opaque, so the
+  // sticky Hero cannot show through the incline under the progress bar.
+  @include incline-curtain($black, --stats-progress);
 
   // ── Top info strip — matches HomeAbout / HomeServices pattern ──────────────
   &__strip {

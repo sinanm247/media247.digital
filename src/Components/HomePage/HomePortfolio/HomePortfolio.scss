@@ -58,7 +58,8 @@
   &__body {
     @include page-gutter;
     display: grid;
-    grid-template-columns: 200px 1fr 160px;
+    grid-template-columns: 200px minmax(0, 840px) 160px;
+    justify-content: space-between;
     gap: clamp(24px, 4vw, 56px);
     padding-top: clamp(32px, 4vw, 56px);
     padding-bottom: clamp(40px, 5vw, 72px);
@@ -162,6 +163,7 @@
 
   &__card {
     background: #ffffff;
+    width: 100%;
     transform-origin: top center;
     will-change: transform;
   }
@@ -296,7 +298,8 @@
   // ── Responsive ─────────────────────────────────────────────────────────
   @include respond-below(lg) {
     &__body {
-      grid-template-columns: 160px 1fr 140px;
+      grid-template-columns: 160px minmax(0, 700px) 140px;
+      justify-content: space-between;
       gap: 24px;
     }
   }

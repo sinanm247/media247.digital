@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import AboutStrip from '../AboutStrip/AboutStrip';
+import LineReveal from '../../Common/LineReveal/LineReveal';
 import { useInclineReveal } from '../../../Hooks/useInclineReveal';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
@@ -17,7 +18,7 @@ export default function AboutProcess() {
       <AboutStrip index={sectionNum} label={label} />
 
       <h2 id="about-process-title" className="about-process__statement">
-        {statement}
+        <LineReveal indent="27%">{statement}</LineReveal>
       </h2>
 
       <figure className="about-process__media">

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Navbar from '../../Common/Navbar/Navbar';
+import { enterStyle } from '../../Common/Entrance/enterStyle';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './AboutHero.scss';
@@ -37,17 +38,21 @@ export default function AboutHero() {
   return (
     <section ref={sectionRef} className="about-hero" aria-labelledby="about-hero-title">
       <div className="about-hero__bg" aria-hidden="true">
-        <img src={banner} alt="" className="about-hero__bg-img" />
+        <img
+          src={banner}
+          alt=""
+          className="about-hero__bg-img enter-media"
+        />
       </div>
 
       <Navbar variant="on-light" />
 
-      <div className="about-hero__stage">
-        <div className="about-hero__frame">
+      <div className="about-hero__stage enter-rise" style={enterStyle(100, 70, 1170, 'spring')}>
+        <div className="about-hero__frame enter-rise__in">
           <img
             src={banner}
             alt="A hand holding a glass card printed with the Media247 Digital mark"
-            className="about-hero__frame-img"
+            className="about-hero__frame-img enter-zoom"
           />
           <span className="about-hero__shade" aria-hidden="true" />
 
@@ -64,12 +69,18 @@ export default function AboutHero() {
       </div>
 
       <div className="about-hero__meta">
-        <span className="about-hero__meta-label">{label}</span>
-        <p className="about-hero__meta-copy">
-          <span>{captionLine1}</span>
-          <span>{captionLine2}</span>
+        <span className="about-hero__meta-label enter-rise" style={enterStyle(520, 12, 500)}>
+          <span className="enter-rise__in">{label}</span>
+        </span>
+        <p className="about-hero__meta-copy enter-rise" style={enterStyle(680, 12, 500)}>
+          <span className="enter-rise__in">
+            <span>{captionLine1}</span>
+            <span>{captionLine2}</span>
+          </span>
         </p>
-        <span className="about-hero__meta-year">© {year}</span>
+        <span className="about-hero__meta-year enter-rise" style={enterStyle(840, 12, 500)}>
+          <span className="enter-rise__in">© {year}</span>
+        </span>
       </div>
     </section>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Navbar from '../../Common/Navbar/Navbar';
+import { enterStyle } from '../../Common/Entrance/enterStyle';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './WorkHero.scss';
@@ -28,7 +29,7 @@ export default function WorkHero() {
   return (
     <section ref={sectionRef} className="work-hero" aria-labelledby="work-hero-title">
       <div className="work-hero__bg" aria-hidden="true">
-        <img src={banner} alt="" className="work-hero__bg-img" />
+        <img src={banner} alt="" className="work-hero__bg-img enter-media" />
         <span className="work-hero__shade" />
       </div>
 
@@ -36,13 +37,19 @@ export default function WorkHero() {
 
       <div className="work-hero__bottom">
         <h1 id="work-hero-title" className="work-hero__title">
-          <span className="work-hero__line">
-            Latest
-            <sup className="work-hero__count">({count})</sup>
+          <span className="work-hero__line enter-rise" style={enterStyle(100, 28, 1050, 'spring')}>
+            <span className="enter-rise__in">
+              Latest
+              <sup className="work-hero__count">({count})</sup>
+            </span>
           </span>
-          <span className="work-hero__line">Portfolio</span>
+          <span className="work-hero__line enter-rise" style={enterStyle(200, 28, 1050, 'spring')}>
+            <span className="enter-rise__in">Portfolio</span>
+          </span>
         </h1>
-        <p className="work-hero__caption">{description}</p>
+        <p className="work-hero__caption enter-rise" style={enterStyle(400, 16, 1050, 'spring')}>
+          <span className="enter-rise__in">{description}</span>
+        </p>
       </div>
     </section>
   );

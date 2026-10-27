@@ -41,6 +41,10 @@
     color: rgba(255, 255, 255, 0.5);
   }
 
+  .line-reveal__lines .is-fade {
+    display: inline;
+  }
+
   &__rows {
     @include page-gutter;
     margin-top: clamp(36px, 5vw, 64px);
@@ -48,10 +52,12 @@
 
   &__row {
     display: grid;
-    grid-template-columns: minmax(140px, 260px) minmax(220px, 461px) minmax(0, 1fr);
-    gap: clamp(18px, 2.6vw, 40px);
+    // Number column stays wider than the digits, so the photo sits
+    // in the middle with open space after the index, like the reference.
+    grid-template-columns: minmax(168px, 24%) minmax(220px, 30%) minmax(0, 1fr);
+    column-gap: clamp(28px, 3.4vw, 52px);
     align-items: stretch;
-    padding-block: clamp(28px, 3.2vw, 40px);
+    padding-block: clamp(22px, 2.6vw, 32px);
     border-top: 1px solid rgba(255, 255, 255, 0.14);
     opacity: 0.38;
     transition: opacity 0.35s ease;
@@ -66,24 +72,26 @@
   }
 
   &__index {
+    align-self: start;
     font-family: $font-sans;
-    font-size: clamp(5.5rem, 12vw, 168px);
+    font-size: clamp(4.75rem, 8.6vw, 140px);
     font-weight: $fw-medium;
     letter-spacing: -0.04em;
-    line-height: 0.85;
+    line-height: 0.82;
     color: #ffffff;
   }
 
   &__media {
+    align-self: start;
     min-width: 0;
   }
 
   &__media img {
     display: block;
     width: 100%;
-    aspect-ratio: 461 / 323;
+    aspect-ratio: 3 / 2;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 4px;
     background: #1c1c1c;
   }
 
@@ -91,9 +99,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 28px;
+    align-self: stretch;
+    gap: clamp(18px, 2vw, 28px);
     min-width: 0;
-    padding-top: 6px;
+    min-height: 100%;
+    padding-top: 2px;
   }
 
   &__title {
@@ -129,11 +139,12 @@
 
   @include respond-below(lg) {
     &__row {
-      grid-template-columns: minmax(88px, 140px) minmax(180px, 1fr) minmax(180px, 1fr);
+      grid-template-columns: 108px minmax(160px, 34%) minmax(0, 1fr);
+      column-gap: 20px;
     }
 
     &__index {
-      font-size: clamp(4rem, 10vw, 96px);
+      font-size: clamp(3.4rem, 8vw, 84px);
     }
   }
 

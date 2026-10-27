@@ -1,0 +1,76 @@
+.page-shell__view {
+  display: contents;
+}
+
+.page-shell.is-fade,
+.page-shell.is-card {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.page-shell.is-fade {
+  background: #0a0a0a;
+}
+
+.page-shell.is-card {
+  transform-origin: center center;
+  animation: page-card-in 0.86s cubic-bezier(0.76, 0, 0.18, 1) both;
+}
+
+@keyframes page-card-in {
+  from {
+    transform: scale(0.88);
+    clip-path: inset(11% 9% round 18px);
+  }
+
+  to {
+    transform: none;
+    clip-path: inset(0 round 0);
+  }
+}
+
+.page-snapshot {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  background: #0a0a0a;
+}
+
+.page-snapshot--fade {
+  animation: page-fade-out 0.22s ease forwards;
+}
+
+.page-snapshot--card {
+  animation: page-card-out 0.86s ease forwards;
+}
+
+@keyframes page-fade-out {
+  to {
+    filter: brightness(0);
+  }
+}
+
+@keyframes page-card-out {
+  to {
+    filter: blur(14px) brightness(0.38);
+    transform: scale(1.04);
+  }
+}
+
+html.is-page-transition,
+html.is-page-transition body {
+  background: #0a0a0a;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-shell.is-fade,
+  .page-shell.is-card,
+  .page-snapshot--fade,
+  .page-snapshot--card {
+    animation: none;
+  }
+}

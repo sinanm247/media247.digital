@@ -1,13 +1,16 @@
 import { useTheme } from '../../../Context/ThemeContext';
 import './ThemeToggle.scss';
 
-export default function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
+export default function ThemeToggle({ theme: themeProp, onToggle, variant = 'fixed' }) {
+  const globalTheme = useTheme();
+  const theme = themeProp ?? globalTheme.theme;
+  const toggleTheme = onToggle ?? globalTheme.toggleTheme;
   const isTheme1 = theme === 'theme-1';
 
   return (
     <button
-      className="theme-toggle"
+      type="button"
+      className={`theme-toggle${variant === 'inline' ? ' theme-toggle--inline' : ''}`}
       onClick={toggleTheme}
       aria-label={`Switch to ${isTheme1 ? 'Theme II' : 'Theme I'}`}
       title={`Switch to ${isTheme1 ? 'Theme II' : 'Theme I'}`}

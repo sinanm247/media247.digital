@@ -6,7 +6,8 @@ export default function HomeStats() {
   const { sectionNum, label, items } = SITE_CONTENT.stats;
   const sectionRef = useRef(null);
 
-  // Diagonal reveal — same logic as HomeAbout (white section over dark Services).
+  // Diagonal wedge — same progress curve as HomeAbout. The wedge is painted
+  // in the Services background color, so the section itself stays opaque.
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return undefined;

@@ -5,6 +5,7 @@
 
 @use 'Styles/variables' as *;
 @use 'Styles/mixins' as *;
+@use 'Styles/entrance';
 
 // --- BDO Grotesk font-face declarations ------------------------------------
 @font-face {
@@ -167,6 +168,8 @@ p {
 }
 
 #root {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   isolation: isolate;
 }

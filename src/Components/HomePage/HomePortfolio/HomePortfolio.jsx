@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { useSectionTheme } from '../../../Context/SectionThemeContext';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
@@ -147,10 +148,10 @@ export default function HomePortfolio() {
           {portfolio.description && (
             <p className="home-portfolio__description">{portfolio.description}</p>
           )}
-          <a href="/work" className="home-portfolio__cta">
+          <Link to="/work" className="home-portfolio__cta">
             <span className="home-portfolio__cta-text">{portfolio.cta}</span>
             <span className="home-portfolio__cta-arrow" aria-hidden="true">↗</span>
-          </a>
+          </Link>
         </aside>
 
         {/* Portfolio items list */}
@@ -180,7 +181,7 @@ export default function HomePortfolio() {
         {/* See all card */}
         {portfolioAll && (
           <aside className="home-portfolio__see-all" aria-label="View all portfolio work">
-            <a href="/work" className="home-portfolio__see-all-link">
+            <Link to="/work" className="home-portfolio__see-all-link">
               <div className="home-portfolio__see-all-thumb">
                 <img
                   src={portfolioAll}
@@ -193,7 +194,7 @@ export default function HomePortfolio() {
                 <span>See all</span>
                 <strong>({portfolio.seeAllCount})</strong>
               </div>
-            </a>
+            </Link>
           </aside>
         )}
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Navbar from '../../Common/Navbar/Navbar';
+import { enterStyle } from '../../Common/Entrance/enterStyle';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './ContactForm.scss';
@@ -54,23 +55,28 @@ export default function ContactForm() {
       <Navbar variant="hero" />
 
       <div className="contact-form__layout">
-        <div className="contact-form__media">
+        <div className="contact-form__media enter-rise" style={enterStyle(100, 70, 1170, 'spring')}>
           <img
             src={photo}
             alt="A cinema camera on a studio slider"
-            className="contact-form__photo"
+            className="contact-form__photo enter-rise__in"
           />
         </div>
 
         <form className="contact-form__panel" onSubmit={onSubmit} noValidate>
-          <h1 id="contact-title" className="contact-form__title">
-            {title}
-            <span className="contact-form__mark" aria-hidden="true">”</span>
+          <h1 id="contact-title" className="contact-form__title enter-rise" style={enterStyle(100, 20, 1170, 'spring')}>
+            <span className="enter-rise__in">
+              {title}
+              <span className="contact-form__mark" aria-hidden="true">”</span>
+            </span>
           </h1>
-          <p className="contact-form__intro">{intro}</p>
+          <p className="contact-form__intro enter-rise" style={enterStyle(200, 20, 1170, 'spring')}>
+            <span className="enter-rise__in">{intro}</span>
+          </p>
 
           <div className="contact-form__grid">
-            <label className="contact-form__field">
+            <label className="contact-form__field enter-rise" style={enterStyle(300, 20, 1170, 'spring')}>
+              <span className="enter-rise__in">
               <span>First Name*</span>
               <input
                 name="firstName"
@@ -80,9 +86,11 @@ export default function ContactForm() {
                 aria-invalid={Boolean(errors.firstName)}
               />
               {errors.firstName && <small>{errors.firstName}</small>}
+              </span>
             </label>
 
-            <label className="contact-form__field">
+            <label className="contact-form__field enter-rise" style={enterStyle(400, 20, 1170, 'spring')}>
+              <span className="enter-rise__in">
               <span>Last Name*</span>
               <input
                 name="lastName"
@@ -92,9 +100,11 @@ export default function ContactForm() {
                 aria-invalid={Boolean(errors.lastName)}
               />
               {errors.lastName && <small>{errors.lastName}</small>}
+              </span>
             </label>
 
-            <label className="contact-form__field">
+            <label className="contact-form__field enter-rise" style={enterStyle(500, 20, 1170, 'spring')}>
+              <span className="enter-rise__in">
               <span>Category</span>
               <select
                 name="category"
@@ -107,9 +117,11 @@ export default function ContactForm() {
                   <option key={name} value={name}>{name}</option>
                 ))}
               </select>
+              </span>
             </label>
 
-            <label className="contact-form__field">
+            <label className="contact-form__field enter-rise" style={enterStyle(600, 20, 1170, 'spring')}>
+              <span className="enter-rise__in">
               <span>Email</span>
               <input
                 type="email"
@@ -121,9 +133,11 @@ export default function ContactForm() {
                 aria-invalid={Boolean(errors.email)}
               />
               {errors.email && <small>{errors.email}</small>}
+              </span>
             </label>
 
-            <label className="contact-form__field contact-form__field--wide">
+            <label className="contact-form__field contact-form__field--wide enter-rise" style={enterStyle(700, 20, 1170, 'spring')}>
+              <span className="enter-rise__in">
               <span>Message</span>
               <textarea
                 name="message"
@@ -134,10 +148,13 @@ export default function ContactForm() {
                 aria-invalid={Boolean(errors.message)}
               />
               {errors.message && <small>{errors.message}</small>}
+              </span>
             </label>
           </div>
 
-          <button type="submit" className="contact-form__submit">{submit}</button>
+          <div className="enter-rise" style={enterStyle(800, 20, 1170, 'spring')}>
+            <button type="submit" className="contact-form__submit enter-rise__in">{submit}</button>
+          </div>
         </form>
       </div>
     </section>

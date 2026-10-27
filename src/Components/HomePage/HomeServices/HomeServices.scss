@@ -127,18 +127,20 @@
     display: flex;
     align-items: stretch;
     gap: clamp(12px, 1.5vw, 20px);
-    padding: clamp(20px, 2.5vw, 32px) clamp(32px, 5vw, 80px);
+    padding: clamp(16px, 2vw, 24px) clamp(32px, 5vw, 80px) clamp(28px, 3.5vw, 44px);
     will-change: transform;
     min-height: 0; // required for flex children to respect parent height
+    container-type: size;
   }
 
   // ── Service card ──────────────────────────────────────────────────────────
   &__card {
     flex-shrink: 0;
-    // width: viewport minus left-padding, gap, and a ~160px "peek" of the next card
-    width: clamp(300px, calc(100vw - 240px), 1160px);
+    width: max-content;
+    max-width: min(1160px, calc(100vw - 200px));
+    height: 100%;
     display: grid;
-    grid-template-columns: clamp(200px, 30%, 360px) 1fr;
+    grid-template-columns: clamp(200px, 28vw, 320px) auto;
     background: #111111;
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 8px;
@@ -154,18 +156,19 @@
   &__card-body {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: clamp(24px, 3vw, 44px);
+    justify-content: flex-start;
+    min-height: 0;
+    padding: clamp(18px, 2vw, 28px);
     border-right: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   &__card-num {
     font-family: $font-sans;
-    font-size: clamp(5rem, 9vw, 11rem);
+    font-size: clamp(1.35rem, 1.8vw, 1.7rem);
     font-weight: $fw-bold;
     line-height: 1;
-    letter-spacing: -0.05em;
-    color: rgba(255, 255, 255, 0.07);
+    letter-spacing: -0.04em;
+    color: rgba(255, 255, 255, 0.28);
     user-select: none;
     transition: color 0.4s ease;
 
@@ -209,10 +212,12 @@
     max-width: 42ch;
   }
 
-  // Right: image pane
+  // 1920×1280 is 3:2. The frame uses that ratio and scales to the track.
   &__card-img-wrap {
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1920 / 1280;
     overflow: hidden;
-    position: relative;
     background: #1a1a1a;
   }
 
@@ -220,23 +225,22 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
-    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-    .home-services__card:hover & {
-      transform: scale(1.04);
-    }
   }
 
   // ── Progress bar + counter ────────────────────────────────────────────────
   &__progress {
     @include page-gutter;
+    position: relative;
+    z-index: 3;
     display: flex;
     align-items: center;
     gap: 20px;
-    padding-top: 10px;
-    padding-bottom: 14px;
+    padding-top: 12px;
+    padding-bottom: 16px;
     flex-shrink: 0;
+    background: $black;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
   }
 
@@ -278,7 +282,7 @@
   // ── Responsive ────────────────────────────────────────────────────────────
   @include respond-below(lg) {
     &__card {
-      grid-template-columns: clamp(180px, 36%, 300px) 1fr;
+      grid-template-columns: clamp(180px, 34%, 280px) auto;
     }
   }
 
@@ -298,13 +302,18 @@
 
     &__card {
       width: 100%;
+      max-width: none;
+      height: auto;
       grid-template-columns: 1fr;
-      grid-template-rows: 220px auto;
+      grid-template-rows: auto auto;
       border-radius: 6px;
     }
 
     &__card-img-wrap {
       grid-row: 1;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1920 / 1280;
     }
 
     &__card-body {
@@ -316,7 +325,7 @@
     }
 
     &__card-num {
-      display: none;
+      font-size: 1.25rem;
     }
 
     &__card-title {

@@ -99,6 +99,28 @@
   &__pill--right ~ &__opt:last-of-type {
     color: #111111;
   }
+
+  // Sits in a section strip. The fixed site-wide toggle stays commented out.
+  &--inline {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    z-index: 2;
+    flex-shrink: 0;
+    margin-right: 16px;
+    padding: 6px 10px;
+    opacity: 1;
+    transform: none;
+    animation: none;
+
+    @media (max-width: 768px) {
+      margin-right: 10px;
+
+      .theme-toggle__label {
+        display: none;
+      }
+    }
+  }
 }
 
 @keyframes theme-toggle-enter {

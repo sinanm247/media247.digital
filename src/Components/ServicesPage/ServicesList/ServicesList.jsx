@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import AboutStrip from '../../AboutPage/AboutStrip/AboutStrip';
+import LineReveal from '../../Common/LineReveal/LineReveal';
+import ServicesThemeToggle from '../../Common/ServicesThemeToggle/ServicesThemeToggle';
 import { useInclineReveal } from '../../../Hooks/useInclineReveal';
-import { useTheme } from '../../../Context/ThemeContext';
+import { useServicesTheme } from '../../../Context/ServicesThemeContext';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
 import './ServicesList.scss';
 
 export default function ServicesList() {
   const sectionRef = useRef(null);
-  const { theme } = useTheme();
+  const { theme } = useServicesTheme();
   const images = THEME_ASSETS[theme].services;
   const { introBold, introFade, list } = SITE_CONTENT.services;
   const [active, setActive] = useState(0);
@@ -44,12 +46,14 @@ export default function ServicesList() {
 
   return (
     <section ref={sectionRef} className="services-list" aria-labelledby="services-list-heading">
-      <AboutStrip index="01" label="Services" />
+      <AboutStrip index="01" label="Services" aside={<ServicesThemeToggle />} />
 
       <div className="services-list__lead">
         <h2 id="services-list-heading" className="services-list__statement">
-          <span>{introBold} </span>
-          <span className="is-fade">{introFade}</span>
+          <LineReveal indent="27%">
+            <span>{introBold} </span>
+            <span className="is-fade">{introFade}</span>
+          </LineReveal>
         </h2>
       </div>
 

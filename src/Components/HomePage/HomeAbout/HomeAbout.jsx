@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import LineReveal from '../../Common/LineReveal/LineReveal';
 import { useSectionTheme } from '../../../Context/SectionThemeContext';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
 import { SITE_CONTENT } from '../../../Datasets/siteContent';
@@ -76,7 +78,7 @@ export default function HomeAbout() {
       {/* ── Large section heading ──────────────────────────────────────── */}
       <div className="home-about__heading-wrap">
         <h2 id="about-heading" className="home-about__heading">
-          {about.heading}
+          <LineReveal indent="38%">{about.heading}</LineReveal>
         </h2>
       </div>
 
@@ -115,10 +117,10 @@ export default function HomeAbout() {
             </div>
           ))}
 
-          <a href="/work" className="home-about__cta">
+          <Link to="/work" className="home-about__cta">
             <span className="home-about__cta-text">{about.cta}</span>
             <span className="home-about__cta-arrow" aria-hidden="true">↗</span>
-          </a>
+          </Link>
         </div>
       </div>
 

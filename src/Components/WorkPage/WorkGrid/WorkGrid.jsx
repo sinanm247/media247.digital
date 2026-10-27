@@ -1,4 +1,6 @@
 import { useRef } from 'react';
+import AboutStrip from '../../AboutPage/AboutStrip/AboutStrip';
+import LineReveal from '../../Common/LineReveal/LineReveal';
 import { useInclineReveal } from '../../../Hooks/useInclineReveal';
 import { useTheme } from '../../../Context/ThemeContext';
 import { THEME_ASSETS } from '../../../Datasets/themeAssets';
@@ -27,7 +29,7 @@ export default function WorkGrid() {
   const sectionRef = useRef(null);
   const { theme } = useTheme();
   const media = THEME_ASSETS[theme].portfolio;
-  const { items } = SITE_CONTENT.portfolio;
+  const { items, pageIndex, pageLabel, statementBold, statementFade } = SITE_CONTENT.portfolio;
   const year = new Date().getFullYear();
   useInclineReveal(sectionRef);
 
@@ -38,7 +40,15 @@ export default function WorkGrid() {
 
   return (
     <section ref={sectionRef} className="work-grid" aria-labelledby="work-grid-title">
-      <h2 id="work-grid-title" className="work-grid__sr">Selected work</h2>
+      <AboutStrip index={pageIndex} label={pageLabel} />
+      <div className="work-grid__lead">
+        <h2 id="work-grid-title" className="work-grid__statement">
+          <LineReveal indent="27%">
+            <span>{statementBold} </span>
+            <span className="is-fade">{statementFade}</span>
+          </LineReveal>
+        </h2>
+      </div>
       <div className="work-grid__list">
         {cards.map((item) => (
           <article key={item.id} className="work-card">

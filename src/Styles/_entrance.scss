@@ -1,0 +1,95 @@
+// Entrance timing measured from the Fuel page loads.
+// Image: 1s, cubic-bezier(0.44, 0, 0.56, 1), scale 1.2 to rest, opacity 0 to 1.
+// Header: delay 300ms, 1170ms, from -100px.
+// Nav links: 500ms, from -10px, delays 400/500/600/700/800.
+// Lines: 500ms, from +10px. Long rises use the 1170ms spring.
+
+:root {
+  --ease-settle: cubic-bezier(0.44, 0, 0.34, 0.98);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-tag: cubic-bezier(0.76, 0.02, 0.13, 1.01);
+  --ease-image: cubic-bezier(0.44, 0, 0.56, 1);
+}
+
+.enter-rise {
+  overflow: hidden;
+}
+
+.enter-rise__in {
+  opacity: 0;
+  transform: translateY(var(--enter-y, 10px));
+}
+
+.enter-media,
+.enter-zoom {
+  transform-origin: center center;
+}
+
+.enter-media {
+  opacity: 0;
+  transform: scale(1.2);
+}
+
+.enter-zoom {
+  transform: scale(1.14);
+}
+
+.app-shell.is-ready .enter-rise__in {
+  animation: enter-rise var(--enter-dur, 500ms) var(--enter-ease, var(--ease-settle)) var(--enter-delay, 0ms) both;
+}
+
+.app-shell.is-ready .enter-media {
+  animation: enter-media 1000ms var(--ease-image) var(--enter-media-delay, 0ms) both;
+}
+
+.app-shell.is-ready .enter-zoom {
+  animation: enter-zoom 1000ms var(--ease-image) var(--enter-media-delay, 80ms) both;
+}
+
+@keyframes enter-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--enter-y, 10px));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes enter-media {
+  from {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(var(--enter-scale, 1));
+  }
+}
+
+@keyframes enter-zoom {
+  from {
+    transform: scale(1.14);
+  }
+
+  to {
+    transform: scale(var(--enter-scale, 1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter-rise__in,
+  .enter-media,
+  .enter-zoom {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: scale(var(--enter-scale, 1)) !important;
+  }
+
+  .enter-rise__in {
+    transform: none !important;
+  }
+}
