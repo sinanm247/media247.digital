@@ -11,6 +11,7 @@ import mizna from '../../../assets/Theme-1/Team/Mizna.webp';
 import sinan from '../../../assets/Theme-1/Team/Sinan.webp';
 import sierra from '../../../assets/Theme-1/Team/Sierra.webp';
 import john from '../../../assets/Theme-1/Team/John.webp';
+import ayoshi from '../../../assets/Theme-1/Team/Ayoshi.webp';
 import './AboutTeam.scss';
 
 const PHOTOS = {
@@ -23,6 +24,7 @@ const PHOTOS = {
   sinan,
   sierra,
   john,
+  ayoshi,
 };
 
 const MIN_COPIES = 2;

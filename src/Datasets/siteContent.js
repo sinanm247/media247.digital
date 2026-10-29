@@ -341,6 +341,7 @@ export const SITE_CONTENT = {
         { id: 'sierra', name: 'Sierra Raj', role: 'Graphic Designer' },
         { id: 'john', name: 'John Kenneth dela Cruz', role: 'Videographer' },
         { id: 'yupar', name: 'Yupar Yone Oo', role: 'Social Media Account Manager' },
+        { id: 'ayoshi', name: 'Ayoshi Biswas', role: 'SEO Specialist' },
       ],
     },
 
