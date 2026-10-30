@@ -126,6 +126,8 @@ export const SITE_CONTENT = {
         index: '01',
         title: 'Content Creation',
         subtitle: 'Creative Strategy',
+        summary:
+          'Built around what your audience is doing, and only when it can lead to a conversion.',
         description:
           "Content that has a reason to exist beyond filling a calendar. We build it around what your audience is actually doing — not simply what the algorithm rewarded last month. If it doesn't connect to a conversion, we'll tell you before we make it.",
       },
@@ -134,6 +136,8 @@ export const SITE_CONTENT = {
         index: '02',
         title: 'Performance Marketing',
         subtitle: 'Paid Media & ROI',
+        summary:
+          'Bought against a number: cost per lead, ROAS, and a date to stop.',
         description:
           "We buy media with a number in mind — your cost per lead, your ROAS, your payback period. Every campaign launches with a ceiling and a kill date. We don't wait for the budget to run out before making a call.",
       },
@@ -142,6 +146,8 @@ export const SITE_CONTENT = {
         index: '03',
         title: 'Social Media Management',
         subtitle: 'Community & Growth',
+        summary:
+          'Managed so it works with your paid media, not apart from it.',
         description:
           'Consistent, considered, and always pointed at something commercial. We manage your presence so it works alongside your paid activity, not independently of it.',
       },
@@ -150,6 +156,8 @@ export const SITE_CONTENT = {
         index: '04',
         title: 'SEO',
         subtitle: 'Organic Visibility',
+        summary:
+          'Traffic that compounds: the foundations, the authority, and the terms buyers search.',
         description:
           "The kind of traffic that compounds. We work on what actually moves rankings — technical foundations, content that earns authority, and the search terms your buyers are using when they're ready to act.",
       },
@@ -158,6 +166,8 @@ export const SITE_CONTENT = {
         index: '05',
         title: 'Website Development',
         subtitle: 'Digital Presence',
+        summary:
+          'Built to convert. Every page has a job, and we measure whether it does it.',
         description:
           "Built to convert, not just to look good at the pitch. Every page we build has a job, and we measure whether it's doing it.",
       },
@@ -166,6 +176,8 @@ export const SITE_CONTENT = {
         index: '06',
         title: 'Programmatic Ads',
         subtitle: 'Audience Targeting',
+        summary:
+          'Your audience, found in real time from what they do, not only what they search.',
         description:
           "Your audience, found across the internet in real time, based on what they actually do — not just what they search. We target the right attention at the right moment, and we're specific about what that costs.",
       },

@@ -162,13 +162,15 @@ export default function HomeServices() {
 
               {/* Left: text pane */}
               <div className="home-services__card-body">
-                <div className="home-services__card-info">
+                <div className="home-services__card-head">
                   <span className="home-services__card-num" aria-hidden="true">
                     {item.index}
                   </span>
                   <h3 className="home-services__card-title">{item.title}</h3>
+                </div>
+                <div className="home-services__card-detail">
                   <span className="home-services__card-subtitle">{item.subtitle}</span>
-                  <p className="home-services__card-desc">{item.description}</p>
+                  <p className="home-services__card-desc">{item.summary}</p>
                 </div>
               </div>
 

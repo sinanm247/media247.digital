@@ -5,6 +5,7 @@ import HomePortfolio from '../Components/HomePage/HomePortfolio/HomePortfolio';
 import HomeServices from '../Components/HomePage/HomeServices/HomeServices';
 import HomeCta from '../Components/HomePage/HomeCta/HomeCta';
 import HomeStats from '../Components/HomePage/HomeStats/HomeStats';
+import ContactForm from '../Components/ContactPage/ContactForm/ContactForm';
 
 export default function HomePage() {
   return (
@@ -21,6 +22,7 @@ export default function HomePage() {
         <HomeServices />
         <HomeStats />
         <HomeCta />
+        <ContactForm withNav={false} />
       </main>
     </>
   );

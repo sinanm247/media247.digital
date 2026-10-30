@@ -13,6 +13,11 @@
     z-index: 2;
   }
 
+  &--embedded {
+    z-index: 2;
+    padding-top: clamp(72px, 10vw, 120px);
+  }
+
   &__layout {
     @include page-gutter;
     display: grid;

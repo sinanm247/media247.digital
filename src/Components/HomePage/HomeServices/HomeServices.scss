@@ -156,10 +156,19 @@
   &__card-body {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
+    gap: clamp(16px, 2vw, 28px);
+    height: 100%;
     min-height: 0;
     padding: clamp(18px, 2vw, 28px);
     border-right: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  &__card-head,
+  &__card-detail {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(8px, 0.9vw, 14px);
   }
 
   &__card-num {
@@ -175,12 +184,6 @@
     .home-services__card:hover & {
       color: rgba(255, 255, 255, 0.12);
     }
-  }
-
-  &__card-info {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(8px, 0.9vw, 14px);
   }
 
   &__card-title {
@@ -206,10 +209,10 @@
     font-family: $font-sans;
     font-size: clamp(0.78rem, 0.9vw, 0.9rem);
     font-weight: $fw-light;
-    line-height: 1.7;
+    line-height: 1.45;
     color: rgba(255, 255, 255, 0.4);
     margin: 0;
-    max-width: 42ch;
+    max-width: 36ch;
   }
 
   // 1920×1280 is 3:2. The frame uses that ratio and scales to the track.

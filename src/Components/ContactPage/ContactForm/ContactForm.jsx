@@ -15,7 +15,7 @@ const EMPTY = {
   message: '',
 };
 
-export default function ContactForm() {
+export default function ContactForm({ withNav = true }) {
   const { title, intro, submit, email, categoryPlaceholder, emailPlaceholder, messagePlaceholder } =
     SITE_CONTENT.contactPage;
   const categories = SITE_CONTENT.services.list.map((item) => item.title);
@@ -50,9 +50,14 @@ export default function ContactForm() {
     window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
+  const Heading = withNav ? 'h1' : 'h2';
+
   return (
-    <section className="contact-form" aria-labelledby="contact-title">
-      <Navbar variant="hero" />
+    <section
+      className={`contact-form${withNav ? '' : ' contact-form--embedded'}`}
+      aria-labelledby="contact-title"
+    >
+      {withNav && <Navbar variant="hero" />}
 
       <div className="contact-form__layout">
         <div className="contact-form__media enter-rise" style={enterStyle(100, 70, 1170, 'spring')}>
@@ -64,12 +69,12 @@ export default function ContactForm() {
         </div>
 
         <form className="contact-form__panel" onSubmit={onSubmit} noValidate>
-          <h1 id="contact-title" className="contact-form__title enter-rise" style={enterStyle(100, 20, 1170, 'spring')}>
+          <Heading id="contact-title" className="contact-form__title enter-rise" style={enterStyle(100, 20, 1170, 'spring')}>
             <span className="enter-rise__in">
               {title}
               <span className="contact-form__mark" aria-hidden="true">”</span>
             </span>
-          </h1>
+          </Heading>
           <p className="contact-form__intro enter-rise" style={enterStyle(200, 20, 1170, 'spring')}>
             <span className="enter-rise__in">{intro}</span>
           </p>
